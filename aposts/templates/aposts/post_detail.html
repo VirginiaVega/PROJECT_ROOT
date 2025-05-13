@@ -1,0 +1,57 @@
+{% extends 'aposts/index.html' %}
+
+{% block content %}
+
+<!-- SOLO EL USUARIO PUEDE EDITAR/ELIMINAR SU PUBLICACIÓN -->
+{% if user == author %}
+<a href="{% url 'publicacion_editar' pk=post.pk %}">Editar publicación</a>
+<a href="{% url 'publicacion_eliminar' pk=post.pk %}">Eliminar publicación</a>
+{% endif %}
+
+<!-- PUBLICACIÓN -->
+<h1>{{ post.title }}</h1>
+<p>{{ post.body }}</p>
+<p>Escrito por {{ author.username }}</p>
+
+<!-- PUNTAJES -->
+<h3>Puntajes de usuarios:</h3>
+<ul>
+    {% for p in scores %}
+        <li>{{ p.user.username }} → {{ p.score }} estrellas</li>
+    {% empty %}
+        <li>No hay puntajes aún.</li>
+    {% endfor %}
+</ul>
+
+<!-- AGREGAR O ACTUALIZAR PUNTAJE -->
+<h2>Selecciona el Puntaje</h2>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="puntaje">
+    {{ score_form.as_p }}
+    <button type="submit">Guardar</button>
+</form>
+
+<!-- COMENTARIOS -->
+<h3>Comentarios</h3>
+<ul>
+    {% for comment in comments %}
+        <li><strong>{{ comment.user.username }}:</strong> {{ comment.comment }}</li>
+    {% empty %}
+        <li>No hay comentarios aún.</li>
+    {% endfor %}
+</ul>
+
+<!-- NUEVO COMENTARIO -->
+{% if user.is_authenticated %}
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="form_type" value="comentario">
+    {{ comment_form.as_p }}
+    <button type="submit">Comentar</button>
+</form>
+{% else %}
+<p><a href="{% url 'login' %}">Iniciá sesión</a> para comentar.</p>
+{% endif %}
+
+{% endblock %}

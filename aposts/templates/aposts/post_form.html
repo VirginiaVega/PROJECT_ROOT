@@ -1,0 +1,21 @@
+{% extends 'aposts/index.html' %}
+<!--FORMULARIO PUBLICACION PARA CREACION Y EDICION-->
+{% block content %}
+
+<!--TITULO CREAR O EDITAR-->
+<h1>{% if object %}Editar{% else %}Crear{% endif %} Publicación</h1>
+
+
+
+<!-- Formulario de la publicación (título y descripción) -->
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}  
+
+
+<!--BOTON GUARDAR-->
+    <button type="submit">{% if object %}Actualizar{% else %}Guardar{% endif %}</button>
+</form>
+
+
+{% endblock %}

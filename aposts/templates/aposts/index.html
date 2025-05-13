@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Mi Proyecto Django{% endblock %}</title>
+</head>
+<body>
+
+
+<!-- Cabecera o encabezado -->
+    <header>
+    
+    
+        <nav>
+            <div style="display: flex; justify-content: space-between; align-items: center;"> 
+                {% if user.is_authenticated %}<!--AUTENTICADO/DENTRO-->
+                <div><a href="{% url 'perfil' %}">{{user.username}}</a></div>
+                <div>
+                    <a href="{% url 'publicacion_list' %}">Inicio</a>
+                    <a href="{% url 'publicacion_crear'%}">Crear Publicación</a>
+                    <a href="{% url 'about'%}">Acerca de</a>
+                    <!--<a href="{% url 'perfil'%}">Mi perfil</a>-->
+                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit">Cerrar sesion</button>                        
+                    </form> 
+                    
+                    {% else %}<!--NO AUTENTICADO/FUERA-->
+                    <a href="{% url 'login' %}">Iniciar sesion</a>
+                    <a href="{% url 'registro'%}">Registrarse</a> 
+                    {% endif %}         
+                </div>
+            </div>
+        </nav>
+
+        
+
+
+
+
+
+    
+    </header>
+
+
+
+
+
+<!-- Contenido principal de la página -->
+    <div class="content">
+        {% block content %}
+        {% endblock %}
+    </div>
+
+
+
+<!-- Pie de página -->
+    <footer>
+        <p>&copy; 2025 Mi Proyecto Django. Todos los derechos reservados.</p>
+    </footer>
+
+
+</body>
+</html>

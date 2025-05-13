@@ -1,0 +1,55 @@
+{% extends "aposts/index.html" %}
+
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+
+    <h2>Iniciar sesión</h2>
+    
+    {% if mensaje %}
+        <div>
+            <p style="color:red;">{{ mensaje }}</p>
+        </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div>
+            <label for="username">Usuario</label>
+            <input type="text" id="username" name="username" placeholder="Ingresa tu usuario" value="{{ form.username.value }}">
+            {% if form.username.errors %}
+                <div>
+                    {% for error in form.username.errors %}
+                        <p style="color:red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <div>
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña">
+            {% if form.password.errors %}
+                <div>
+                    {% for error in form.password.errors %}
+                        <p style="color:red;">{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit">Iniciar sesión</button>
+    </form>
+
+</body>
+</html>
+
+{% endblock %}

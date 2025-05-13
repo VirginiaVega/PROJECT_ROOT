@@ -1,0 +1,36 @@
+{% extends "aposts/index.html" %}
+
+{% block content %}
+
+
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+    </head>
+    <body>
+        <nav>
+            <ul>
+                <div>
+                    <a href="{% url 'perfil' %}">Mis publicaciones</a>
+                    <a href="{% url 'edit_profile' %}">Editar perfil</a> 
+                </div>
+            </ul>
+        </nav>
+
+        <!--poner aca un block context-->
+        <div class="contenido">
+            {% block contenido %}
+            <h1>MIS PBLICACIONES</h1>
+            <ul>
+                {% for p in publicaciones %}
+                <li>
+                    <a href="{% url 'publicacion_detail' pk=p.pk %}">{{ p.title }} </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% endblock %}
+        </div>
+
+
+    </body>
+{% endblock content %}

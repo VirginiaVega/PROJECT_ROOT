@@ -1,0 +1,12 @@
+{% extends 'account/profile.html' %}
+
+{% block contenido %}
+<div>
+    <h2>Editar perfil</h2>        
+    <form method="post">
+        {% csrf_token %}
+        {{ mi_form.as_p }}            
+    <button type="submit">Guardar cambios</button>
+    </form>
+</div>
+{% endblock %}

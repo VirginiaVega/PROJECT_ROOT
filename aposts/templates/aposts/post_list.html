@@ -1,0 +1,17 @@
+{% extends 'aposts/index.html' %}
+{% block content %}
+
+<h1>Publicaciones</h1>
+<h2>Total: {{post_count}}</h2>
+
+<!--PUBLICACIONES-->
+<ul>
+    {% for post in object_list %}
+    <li>
+        <a href="{% url 'publicacion_detail' pk=post.pk %}">{{ post.title }} → {{ post.user }}</a>
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}
