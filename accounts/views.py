@@ -16,6 +16,7 @@ def acercade(request):
 	return render(request, "account/about.html")
 
 
+
 @login_required(login_url='login')
 def mi_perfil(request):
     user = request.user
@@ -48,11 +49,6 @@ def register(request):
     else:
         form = UserRegisterForm()
     return render(request, "account/register.html", {"form": form})
-
-
-            # username = form.cleaned_data['username']
-            # email = form.cleaned_data['email']
-            # password = form.cleaned_data['password1']
 
 #editar perfil
 @login_required(login_url='login')

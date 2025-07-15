@@ -33,6 +33,7 @@
                             <li class="nav-item"><a class="nav-link" href="{% url 'about'%}">A cerca de</a></li>
                             <form method="POST" action="{% url 'logout' %}" style="display:inline;">
                                 {% csrf_token %}
+                                <!--<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>-->
                                 <button type="submit">Cerrar sesion</button>                        
                             </form> 
                         </ul>

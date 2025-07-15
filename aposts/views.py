@@ -12,7 +12,7 @@ class PublicacionCrear(LoginRequiredMixin, CreateView):
     model=Post
     template_name='aposts/post_form.html'
     success_url=reverse_lazy('publicacion_list')
-    fields=['title','body']    
+    fields=['title','body', 'image']    
 
     #Asigna el usuario
     def form_valid(self, form):
@@ -24,7 +24,7 @@ class PublicacionEditar(LoginRequiredMixin, UpdateView):
     model=Post
     template_name='aposts/post_form.html'
     success_url=reverse_lazy("publicacion_list")
-    fields=["title", "body"]
+    fields=["title", "body", "image"]
 
 # Vista para listar todas las publicaciones, y el numero total de ellas
 class PublicacionListView(LoginRequiredMixin, ListView):

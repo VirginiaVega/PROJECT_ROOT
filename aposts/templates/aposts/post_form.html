@@ -7,10 +7,10 @@
 
 
 
-<!-- Formulario de la publicación (título y descripción) -->
-<form method="post">
+<!-- Formulario de la publicación (título, descripción e imagen) -->
+<form method="post" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}  
+    {{ form.as_p }} 
 
 
 <!--BOTON GUARDAR-->

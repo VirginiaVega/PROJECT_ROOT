@@ -1,5 +1,5 @@
 {% extends 'aposts/index.html' %}
-
+{% load static %}
 {% block content %}
 
 <!-- SOLO EL USUARIO PUEDE EDITAR/ELIMINAR SU PUBLICACIÓN -->
@@ -10,6 +10,15 @@
 
 <!-- PUBLICACIÓN -->
 <h1>{{ post.title }}</h1>
+
+<div class="card mb-5">
+{% if post.image %}
+    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top" />   
+{% else %}
+    <img class="card-img-top" src="{% static 'images/man-using.jpg' %}"/>
+{% endif %}
+</div>
+
 <p>{{ post.body }}</p>
 <p>Escrito por {{ author.username }}</p>
 

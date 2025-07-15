@@ -142,10 +142,14 @@ LOGIN_URL = '/'
 
 import os
 
+#imagenes estaticas por defecto
+#Esta linea es para  que django busque la carpeta static global creada cuando uses: {% static 'images/man-using.jpg' %} por ej
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-]
+] 
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#imagenes que el usuario carga, para que funcione necesito agregar el: + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# en la urls.py del proyecto: config, en este caso
+MEDIA_URL = '/media/' #donde se guardan
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #como se acceden
 
