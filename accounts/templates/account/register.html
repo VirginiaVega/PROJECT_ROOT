@@ -2,57 +2,53 @@
 
 
 {% block content %}
-<div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
+<div class=" rounded-3 py-5 px-4 px-md-5 mb-5">
     <div class="text-center mb-5">
-        <div class="feature bg-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-envelope"></i></div>
         <h1 class="fw-bolder">Registro</h1>
-        <p class="lead fw-normal text-muted mb-0">Completa los datos de registro</p>
     </div>
 
     <div class="row gx-5 justify-content-center">
         <div class="col-lg-8 col-xl-6">
-            <form method="post">
-                {% csrf_token %}
+            <form method="post" novalidate>
 
+                {% csrf_token %}
                 <!--User name-->
                 <div class="form-floating mb-3">
-                    <input class="form-control {% if form.username.errors %}is-invalid{% endif %}" type="text" id="username" name="username" placeholder="Ingresa tu nombre de usuario" value="{{ form.username.value|default_if_none:'' }}">
-                    <label for="username">Nombre de usuario</label>
+                    <input class="form-control {% if form.username.errors %}is-invalid{% endif %}" type="text" id="username" name="username" placeholder="Usuario" value="{{ form.username.value|default_if_none:'' }}">
                     {% for error in form.username.errors %}
-                        <div class="invalid-feedback">{{ error }}</div> <!--Con esto muestra el mensaje de "este campo es obligatorio" -->
+                        <div class="invalid-feedback">{{ error }}</div> 
                     {% endfor %}
                 </div>
 
                 <!--Email-->
                 <div class="form-floating mb-3">
-                    <input class="form-control {% if form.email.errors %}is-invalid{% endif %}" type="email" id="email" name="email"  placeholder="Ingresa tu correo electrónico" value="{{ form.email.value|default_if_none:'' }}">
-                    <label for="email">Correo electrónico</label>
+                    <input class="form-control {% if form.email.errors %}is-invalid{% endif %}" 
+                    type="email" id="email" name="email" 
+                     placeholder="Correo de recuperación" value="{{ form.email.value|default_if_none:'' }}">
                     {% for error in form.email.errors %}
-                        <div class="invalid-feedback">{{ error }}</div> <!--Con esto muestra el mensaje de "este campo es obligatorio" -->
+                        <div class="invalid-feedback">{{ error }}</div> 
                     {% endfor %}
                 </div>
 
                 <!--Password-->
                 <div class="form-floating mb-3">
-                    <input class="form-control {% if form.password1.errors %}is-invalid{% endif %}" type="password" id="password1" name="password1" placeholder="Ingresa tu contraseña">
-                    <label for="password1">Contraseña</label>
+                    <input class="form-control {% if form.password1.errors %}is-invalid{% endif %}" type="password" id="password1" name="password1" placeholder="Contraseña">
                     {% for error in form.password1.errors %}
-                        <div class="invalid-feedback">{{ error }}</div> <!--Con esto muestra el mensaje de "este campo es obligatorio" -->
+                        <div class="invalid-feedback">{{ error }}</div> 
                     {% endfor %}
                 </div>
 
                 <!--Password validator-->
                 <div class="form-floating mb-3">
-                    <input class="form-control {% if form.password2.errors %}is-invalid{% endif %}" type="password" id="password2" name="password2" placeholder="Repite tu contraseña">
-                    <label for="password2">Repetir contraseña</label>
+                    <input class="form-control {% if form.password2.errors %}is-invalid{% endif %}" type="password" id="password2" name="password2" placeholder="Validar contraseña">
                     {% for error in form.password2.errors %}
-                        <div class="invalid-feedback">{{ error }}</div> <!--Con esto muestra el mensaje de "este campo es obligatorio" -->
+                        <div class="invalid-feedback">{{ error }}</div>
                     {% endfor %}
                 </div>
 
                 <div class="form-floating mb-3">
                 {% for error in form.non_field_errors %}
-                        <div class="text-center text-danger mb-3">{{ error }}</div> <!--esta mal mostrado el div: div class="invalid-feedback" -"text-center text-danger mb-3" -->
+                        <div class="text-center text-danger mb-3">{{ error }}</div> 
                 {% endfor %}
                 </div>
 
@@ -61,79 +57,6 @@
             </form>
         </div>
     </div>
+
 </div>
 {% endblock %}
-
-
-
-{% comment %}
-
-<body>
-
-    <h2>Registro de Usuario</h2>
-
-    <form method="post">
-        {% csrf_token %}
-        
-        <div>
-            <label for="username">Nombre de usuario</label>
-            <input type="text" id="username" name="username" value="{{ form.username.value }}" placeholder="Ingresa tu nombre de usuario">
-            {% if form.username.errors %}
-                <div>
-                    {% for error in form.username.errors %}
-                        <p style="color:red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div> {% endcomment %}
-
-        {% comment %} <div>
-            <label for="email">Correo electrónico</label>
-            <input type="email" id="email" name="email" value="{{ form.email.value }}" placeholder="Ingresa tu correo electrónico">
-            {% if form.email.errors %}
-                <div>
-                    {% for error in form.email.errors %}
-                        <p style="color:red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div> {% endcomment %}
-
-        {% comment %} <div>
-            <label for="password1">Contraseña</label>
-            <input type="password" id="password1" name="password1" placeholder="Ingresa tu contraseña">
-            {% if form.password1.errors %}
-                <div>
-                    {% for error in form.password1.errors %}
-                        <p style="color:red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div> {% endcomment %}
-
-        {% comment %} <div>
-            <label for="password2">Repetir contraseña</label>
-            <input type="password" id="password2" name="password2" placeholder="Repite tu contraseña">
-            {% if form.password2.errors %}
-                <div>
-                    {% for error in form.password2.errors %}
-                        <p style="color:red;">{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        </div> 
-
-
-        <button type="submit">Registrarse</button>
-    </form>
-
-    {% if form.non_field_errors %}
-        <div>
-            {% for error in form.non_field_errors %}
-                <p style="color:red;">{{ error }}</p>
-            {% endfor %}
-        </div>
-    {% endif %}
-
-</body>
-</html>{% endcomment %}

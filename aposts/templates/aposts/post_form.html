@@ -1,21 +1,67 @@
 {% extends 'aposts/index.html' %}
-<!--FORMULARIO PUBLICACION PARA CREACION Y EDICION-->
+{% load static %}
+
 {% block content %}
+<section class="py-0">
+    <div class="container px-5">
 
-<!--TITULO CREAR O EDITAR-->
-<h1>{% if object %}Editar{% else %}Crear{% endif %} Publicación</h1>
+        <!-- titulo -->
+        <div class="row gx-5 mb-4">    
+            <h1 class="fw-bolder mb-3 border-bottom pb-2">{% if object %}Editar{% else %}Crear{% endif %}</h1>
+            </hr>        
+        </div>
+
+        <form id="postForm" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- DIVS -->
+        <div class="row gx-5">
+
+        <!-- izq --> 
+            <div class="col-lg-6 "> 
+                <!-- Campo imagen con vista previa recortada automáticamente--> 
+                <div class="mb-3"> 
+                    <label for="imageInput" class="btn btn-primary">Seleccionar imagen</label> 
+                    <input type="file" id="imageInput" accept="image/*" style="display: none;" > 
+                    <canvas id="previewCanvas" class="mt-3" ></canvas> 
+                </div> <!-- Imagen recortada en base64 --> 
+                <input type="hidden" name="cropped_image" id="croppedImageInput" value="{{ form.data.cropped_image|default_if_none:'' }}"> 
+                <!-- Imagen existente cuando se edita CODIGO NUEVO-->
+                <input type="hidden" id="existingImage" value="{% if form.instance.image %}{{ form.instance.image.url }}{% endif %}">
+            </div>
 
 
+            <!-- der -->            
+            <div class="col-lg-6 order-first order-lg-last">
+                <!-- titulo -->
+                <div class="mb-3">
+                    <label for="title" class="form-label">Título</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ form.instance.title|default_if_none:'' }}">
+                    {% if form.title.errors %}
+                        <div class="text-danger small">
+                            {{ form.title.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- descripcion -->
+                <div class="mb-3">
+                    <label for="body" class="form-label">Descripción</label>
+                    <textarea name="body" id="body" rows="5" class="form-control" oninput="autoResize(this)">{{ form.body.value|default_if_none:'' }}</textarea>
+                    {% if form.body.errors %}
+                        <div class="text-danger small">
+                            {{ form.body.errors|join:", " }}
+                        </div>
+                    {% endif %}
+                </div>
+                <!-- Boton -->
+                <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+            </div>
 
-<!-- Formulario de la publicación (título, descripción e imagen) -->
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }} 
+        </div>
+        </form>
 
-
-<!--BOTON GUARDAR-->
-    <button type="submit">{% if object %}Actualizar{% else %}Guardar{% endif %}</button>
-</form>
-
-
+    </div>
+</section>
+<script src="{% static 'js/scripts.js' %}"></script>
 {% endblock %}
+

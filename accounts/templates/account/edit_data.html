@@ -1,0 +1,65 @@
+{% extends "account/profile.html" %}
+{% load static %}
+
+{% block contenido_edit %}
+{% if perfil_user == request.user %}
+<div class="container px-5 my-0">
+    <div class="row gx-5">
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="col-lg-6 p-3"> 
+
+                <!-- imagen-->
+                <label for="body" class="form-label">Imagen</label> 
+                <div class=" my-3 d-flex align-items-end">  
+                    <div class="pe-3">
+                         <div class="rounded-circle overflow-hidden" style="width: 150px; height: 150px;">
+                            <img id="avatarPreview" src="{{ perfil_user.profile.avatar.url }}" alt="Avatar" class="w-100 h-100" style="object-fit: cover;">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="avatarInput" class="btn btn-primary">Seleccionar</label> 
+                        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;">
+                    </div>                    
+                </div>
+
+                <!-- descripcion -->
+                <div class="mb-3">
+                    <label for="description" class="form-label">Descripción de perfil</label>
+                    <textarea name="description" id="id_description" rows="3" class="form-control" oninput="autoResize(this)">{{ perfil_user.profile.description|default_if_none:'' }}</textarea>
+                </div>    
+
+                <!-- boton -->
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<!-- Script SOLO para la vista previa -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const input = document.getElementById("avatarInput");
+    const preview = document.getElementById("avatarPreview");
+
+    if (input && preview) {
+        input.addEventListener("change", function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                preview.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
+</script>
+
+{% endif %}
+{% endblock contenido_edit %}
+

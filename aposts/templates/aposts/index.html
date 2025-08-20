@@ -7,36 +7,60 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>{% block title %}Mi Proyecto Django{% endblock %}</title>
+        <title>{% block title %}Project Root{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+        <!-- Bootstrap 5 JS Bundle (incluye Popper) PARA HACER EL DESPLEGABLE -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'css/dark-mode.css' %}" rel="stylesheet">
+
+        <script src="{% static 'js/scripts.js' %}"></script>
+
+
     </head>
 
-    <body class="d-flex flex-column h-100">
 
+
+    <body class="d-flex flex-column h-100 mt-5 pt-5" >
 
         <!-- Navigation-->
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div class="container px-5">
                     {% if user.is_authenticated %}<!--AUTENTICADO/DENTRO-->
-                    <a class="navbar-brand" href="{% url 'perfil' %}">{{user.username}}</a>
+                    <a class="navbar-brand" href="{% url 'publicacion_list' %}">Logo</a>
+                    <a class="navbar-brand" href="{% url 'explore'%}">Explorar</a>
 
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item"><a class="nav-link" href="{% url 'publicacion_list' %}">Inicio</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'publicacion_crear'%}">Crear</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{% url 'about'%}">A cerca de</a></li>
-                            <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-                                {% csrf_token %}
-                                <!--<a class="btn btn-primary btn-lg px-4 me-sm-3" href="#features">Get Started</a>-->
-                                <button type="submit">Cerrar sesion</button>                        
-                            </form> 
-                        </ul>
+
+                        <!--DESPLEGABLE ORIGINAL-->
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0" >
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle fs-5 p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span>{{ user.username }}</span>
+
+                                    <img class="rounded-circle" src="{{ user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                     <li><a class="dropdown-item" href="{% url 'perfil' request.user.username %}">Perfil</a></li> <!--request.user siempre es el usuario logueado en ese momento -->
+                                    <li><a class="dropdown-item" href="{% url 'publicacion_crear' %}">Crear</a></li>
+                                    <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Seguridad</a></li>
+                                    <li><button type="button" class="dropdown-item" id="darkModeToggle">🌙 Modo oscuro</button></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li>
+                                        <form method="POST" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class="dropdown-item">Cerrar sesión</button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>  
                     {% else %}<!--NO AUTENTICADO/FUERA-->
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a></li>
@@ -48,92 +72,16 @@
                 </div>
             </nav>
 
+
+
+
             <!-- Contenido principal de la página -->
     <div class="content">
         {% block content %}
+
         {% endblock %}
     </div>
 
-
-        <!-- Footer-->
-            <footer class="bg-dark py-4 mt-auto">
-                <div class="container px-5">
-                    <div class="row align-items-center justify-content-between flex-column flex-sm-row">
-                        <div class="col-auto"><div class="small m-0 text-white">Copyright &copy; 2025 Mi Proyecto Django.</div></div>
-                        <div class="col-auto">
-                            <a class="link-light small" href="#!">Privacy</a>
-                            <span class="text-white mx-1">&middot;</span>
-                            <a class="link-light small" href="#!">Terms</a>
-                            <span class="text-white mx-1">&middot;</span>
-                            <a class="link-light small" href="#!">Contact</a>
-                        </div>
-                    </div>
-                </div>
-            </footer>
     </body>
 </html>
 
-
-{% comment %}
-<!DOCTYPE html>
-<html lang="es">
- <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Mi Proyecto Django{% endblock %}</title>
-</head> 
-<body>
-<!-- Cabecera o encabezado -->
-    <header>  
-    
-        <nav>
-            <div style="display: flex; justify-content: space-between; align-items: center;"> 
-                {% if user.is_authenticated %}<!--AUTENTICADO/DENTRO-->
-                <div><a href="{% url 'perfil' %}">{{user.username}}</a></div>
-                <div>
-                    <a href="{% url 'publicacion_list' %}">Inicio</a>
-                    <a href="{% url 'publicacion_crear'%}">Crear Publicación</a>
-                    <a href="{% url 'about'%}">Acerca de</a>
-                    <!--<a href="{% url 'perfil'%}">Mi perfil</a>-->
-                    <form method="POST" action="{% url 'logout' %}" style="display:inline;">
-                        {% csrf_token %}
-                        <button type="submit">Cerrar sesion</button>                        
-                    </form> 
-                    
-                    {% else %}<!--NO AUTENTICADO/FUERA-->
-                    <a href="{% url 'login' %}">Iniciar sesion</a>
-                    <a href="{% url 'registro'%}">Registrarse</a> 
-                    {% endif %}         
-                </div>
-            </div>
-        </nav>
-
-        
-
-
-
-
-
-    
-    </header>
-
-
-
-
-
-<!-- Contenido principal de la página -->
-    <div class="content">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-
-
-<!-- Pie de página -->
-    <footer>
-        <p>&copy; 2025 Mi Proyecto Django. Todos los derechos reservados.</p>
-    </footer>
-
-
-</body>
-</html>{% endcomment %}

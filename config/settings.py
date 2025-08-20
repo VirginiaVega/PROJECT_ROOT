@@ -153,3 +153,14 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/media/' #donde se guardan
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #como se acceden
 
+
+
+
+#1 Configuracion de recuperacion de contraseña con mail:
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "virginiavega553@gmail.com"
+EMAIL_HOST_PASSWORD = "aqqe yldr nnpl rqeg"
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER

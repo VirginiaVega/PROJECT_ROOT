@@ -1,66 +1,156 @@
 {% extends 'aposts/index.html' %}
 {% load static %}
 {% block content %}
+<section class="py-0 mb-4">
 
-<!-- SOLO EL USUARIO PUEDE EDITAR/ELIMINAR SU PUBLICACIÓN -->
-{% if user == author %}
-<a href="{% url 'publicacion_editar' pk=post.pk %}">Editar publicación</a>
-<a href="{% url 'publicacion_eliminar' pk=post.pk %}">Eliminar publicación</a>
-{% endif %}
+    <div class="container px-5 my-0">
+        <div class="row gx-5" >
 
-<!-- PUBLICACIÓN -->
-<h1>{{ post.title }}</h1>
 
-<div class="card mb-5">
-{% if post.image %}
-    <img src="{{ post.image.url }}" alt="{{ post.title }}" class="card-img-top" />   
-{% else %}
-    <img class="card-img-top" src="{% static 'images/man-using.jpg' %}"/>
-{% endif %}
-</div>
 
-<p>{{ post.body }}</p>
-<p>Escrito por {{ author.username }}</p>
+            <!-- IMAGEN -->
+            <div class="col-lg-6 mb-4" style="height:500px;">
+                <div class="position-relative h-100">
+                    {% if post.image %}
+                        <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded-3 h-100 w-100" style="object-fit:contain;"/>   
+                    {% else %}
+                        <img class="img-fluid rounded-3" src="{% static 'images/man-using.jpg' %}"/>
+                    {% endif %}
+                </div>
+            </div>
 
-<!-- PUNTAJES -->
-<h3>Puntajes de usuarios:</h3>
-<ul>
-    {% for p in scores %}
-        <li>{{ p.user.username }} → {{ p.score }} estrellas</li>
-    {% empty %}
-        <li>No hay puntajes aún.</li>
-    {% endfor %}
-</ul>
 
-<!-- AGREGAR O ACTUALIZAR PUNTAJE -->
-<h2>Selecciona el Puntaje</h2>
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="form_type" value="puntaje">
-    {{ score_form.as_p }}
-    <button type="submit">Guardar</button>
-</form>
 
-<!-- COMENTARIOS -->
-<h3>Comentarios</h3>
-<ul>
-    {% for comment in comments %}
-        <li><strong>{{ comment.user.username }}:</strong> {{ comment.comment }}</li>
-    {% empty %}
-        <li>No hay comentarios aún.</li>
-    {% endfor %}
-</ul>
 
-<!-- NUEVO COMENTARIO -->
-{% if user.is_authenticated %}
-<form method="post">
-    {% csrf_token %}
-    <input type="hidden" name="form_type" value="comentario">
-    {{ comment_form.as_p }}
-    <button type="submit">Comentar</button>
-</form>
-{% else %}
-<p><a href="{% url 'login' %}">Iniciá sesión</a> para comentar.</p>
-{% endif %}
+            <!-- TITULO DESCRIPCION AUTOR FECHA -->
+            <div class="col-lg-6 d-flex align-items-center">
+                <div class="w-100  "><!-- position-relative -->
+                    <h2 class="fw-bolder mb-2">{{ post.title }}</h2>
+                    <p class="fw-normal text-muted mb-4">{{ post.body }}</p>
+                    <div class="d-flex align-items-center mt-3">
+                        <img class="rounded-circle me-2" src="{{ post.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+                        <div>
+                            <div>{{ author.username }}</div>
+                            <div class="text-muted" style="font-size: 0.9rem;">{{ post.created_at|date:"F j, Y" }}</div>
+                        </div>
+                        {% if user == author %}
+                        <div class="ms-5">
+                            <a class="btn btn-primary text-white m-1 p-2" href="{% url 'publicacion_editar' pk=post.pk %}">Editar</a>
+                            <a class="btn btn-primary text-white m-1 p-2" href="{% url 'publicacion_eliminar' pk=post.pk %}">Eliminar</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
 
+
+
+
+            <!-- COMENTARIOS -->
+            <div class="col-lg-6" >
+                <div class="position-relative mb-5 mb-lg-0" >
+                    <section>
+                        <div class="card-body" >
+                            <!-- NUEVO COMENTARIO --->
+                             <form method="post" class="mb-2">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="comentario">  
+                                <div class="d-flex align-items-center" >
+                                    <div class="col-lg-9">
+                                        <div class="mb-1"><textarea name="comment" class="form-control" rows="2" placeholder="Comentar" style="resize: none;"></textarea></div>
+                                    </div>
+                                    <div class="ms-2">
+                                        <div class="d-grid"><button class="btn btn-primary" type="submit">Comentar</button></div>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <!-- COMENTARIOS -->
+                            <div class="card m-1 p-3" style="max-height: 400px; overflow-y: auto;">
+                                {% for comment in comments %}
+                                <div class="d-flex mb-2 align-items-center justify-content-between" >
+                                    <div class="d-flex" >
+                                        <!-- imagen -->
+                                        <div class="flex-shrink-0" >
+                                            <img class="rounded-circle" src="{{ comment.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;"/>
+                                        </div>
+
+                                        <!-- user fecha comentario -->
+                                        <div class="ms-2">
+                                            <div>
+                                                <div style="font-size: 0.9rem;">
+                                                    {{ comment.user.username }} - 
+                                                    <span class="text-muted">{{ comment.created_at|date:"j F" }}</span>
+                                                </div>
+                                            </div>
+                                            {{ comment.comment }}
+                                        </div>
+                                    </div>
+
+                                    <!-- Botón de eliminar SOLO para el dueño del comentario -->
+                                    {% if comment.user == request.user %}
+                                    <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-link p-0 text-danger" title="Eliminar comentario">
+                                            <i class="bi bi-trash"></i> <!-- Bootstrap Icons -->
+                                        </button>
+                                    </form>
+                                    {% endif %}
+                                </div>
+                                {% empty %}
+                                <div class="d-flex align-items-center justify-content-center">
+                                    <p class="fw-bolder p-0">No comments yet</p>
+                                </div>                                     
+                                {% endfor %}
+                            </div>
+
+                            
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+
+
+
+            <!-- VALORACION -->
+            <div class="col-lg-6" >
+                <div class="position-relative m-2 " >                    
+                    <div class="card p-4 ">
+                        <div class="small fw-bold ">
+
+                            <!-- Ver puntajes -->
+                            <h2>Valoración</h2>
+                            <p class="text-muted">Qualifs</p>
+                            <ul class="list-unstyled ms-3">
+                                <li>1 {} - </li>
+                                <li>2 {} - </li>
+                                <li>3 {} - </li>
+                                <li>4 {} - </li>
+                                <li>5 {} - </li>
+                            </ul>
+                            <hr>
+                            <!-- Agregar puntaje -->
+                            <form method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="form_type" value="puntaje">
+
+                                <div class="d-flex justify-content-center align-items-center">
+                                    <div class="col-lg-9">
+                                            <div class=" small d-grid"><h5>Selecciona una calificacion</h5></div>
+                                            <div class="d-grid mb-2">{{ score_form.score }}</div>
+                                            <div class="d-grid"><button class="btn btn-primary" type="submit">Guardar</button></div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+
+
+
+    </div>
+</section>
 {% endblock %}
+

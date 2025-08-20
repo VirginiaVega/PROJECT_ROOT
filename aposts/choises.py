@@ -1,4 +1,4 @@
-ESTRELLAS = (
+STARS = (
     ('1', '1 estrella'),
     ('2', '2 estrellas'),
     ('3', '3 estrellas'),

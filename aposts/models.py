@@ -1,11 +1,13 @@
 from django.db import models
 from django.contrib.auth.models import User
-from .choises import  ESTRELLAS
+from .choises import  STARS
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 # Create your models here.
 
 class Post(models.Model):
     title = models.CharField(max_length=100)
-    body = models.TextField()
+    body = models.TextField(max_length=1000)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posteo', null=True, blank=True)  # Relación con el modelo User
     created_at = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación
     image = models.ImageField(upload_to='entradas/', null=True, blank=True)  # Imagen opcional
@@ -15,8 +17,16 @@ class Post(models.Model):
     class Meta:
         ordering = ['-created_at']  # Ordenar por fecha de creación (de más reciente a más antiguo)
 
+
+# ELIMINAR IMAGEN FISICA AL ELIMINAR EL POST
+@receiver(post_delete, sender=Post)
+def borrar_imagen_post(sender, instance, **kwargs):
+    if instance.image:
+        instance.image.delete(False)
+
+
 class Score(models.Model):
-    score = models.CharField(max_length=1, choices=ESTRELLAS, default='1')    
+    score = models.CharField(max_length=1, choices=STARS, default='1')    
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='puntajes_posteo', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='puntajes_usuario', null=True, blank=True)
     def __str__(self):
@@ -26,7 +36,7 @@ class Score(models.Model):
         verbose_name_plural = 'Puntajes'
 
 class Comment(models.Model):
-    comment = models.TextField()  
+    comment = models.TextField(max_length=200)  
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comentarios')  # Relación con el modelo Post, para saber a qué publicación pertenece el comentario
     user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relación con el modelo User, para saber qué usuario escribió el comentario
     created_at = models.DateTimeField(auto_now_add=True)  

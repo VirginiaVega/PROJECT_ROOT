@@ -1,36 +1,89 @@
+
 {% extends "aposts/index.html" %}
-
+{% load static %}
 {% block content %}
+<section class="py-0 mb-4">
+
+    <div class="container px-2">
+        <!-- NOMBRE DE USUARIO -->
+        <div class="d-flex align-items-center">
+            <img class="rounded-circle me-2" src="{{ perfil_user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+            <div>
+                <div>{{ perfil_user.username }}</div>
+            </div>
+            {% if perfil_user == request.user %}
+            <div class="ms-2">
+                <a class="btn btn-primary text-white m-1 px-2" href="{% url 'edit' request.user.username %}">Editar</a>
+            </div>
+            {% endif %}
+        </div>
+        <hr class="my-2"/>
+    </div>
 
 
-<!DOCTYPE html>
-<html lang="es">
-    <head>
-    </head>
-    <body>
-        <nav>
-            <ul>
-                <div>
-                    <a href="{% url 'perfil' %}">Mis publicaciones</a>
-                    <a href="{% url 'edit_profile' %}">Editar perfil</a> 
+
+{% block contenido_edit %}
+    <div class="container px-5 my-0" >
+        
+
+        <!-- DESCRIPCION -->
+        <div class="row gx-1" >
+            <div class="col-12 col-md-10 mx-auto px-4 py-2 text-center"  >
+                <p class="fw-normal text-muted mb-3">{{ perfil_user.profile.description|default_if_none:"" }}</p>            
+            </div>
+        </div>        
+
+        <!-- OPCIONES Solo las ve si es el usuario logueado-->
+        {% if perfil_user == request.user %}
+        <div class="row gx-1">
+            <div class="col-12 text-center" >
+                <div class="row">
+                    <div class="col-6 d-flex justify-content-end px-4 mb-4">
+                        <a class="text-decoration-none" href="{% url 'perfil' request.user.username %}?tipo=posteos">Posteos</a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-start px-4 mb-4" >
+                        <a class="text-decoration-none" href="{% url 'perfil' request.user.username %}?tipo=calificados">Calificados</a>
+                    </div>  
                 </div>
-            </ul>
-        </nav>
+            </div>
+        </div>
+        {% endif %}
 
-        <!--poner aca un block context-->
-        <div class="contenido">
-            {% block contenido %}
-            <h1>MIS PBLICACIONES</h1>
-            <ul>
-                {% for p in publicaciones %}
-                <li>
-                    <a href="{% url 'publicacion_detail' pk=p.pk %}">{{ p.title }} </a>
-                </li>
+
+        <!-- PUBLICACIONES PROPIAS O CALIFICADAS-->
+        <div class="row gx-1 align-items-center" >
+            <div class="row px-5 justify-content-center contenido">
+                    <!-- Card -->
+                {% for item in publicaciones %}
+                    {% with p=item.post %}
+                    <div class="col-lg-4 mb-5">
+                        <div class="card h-100 shadow border-0 position-relative overflow-hidden">
+                            {% if p.image %}
+                                <img class="card-img-top post-img" src="{{ p.image.url }}" alt="{{ p.title }}" />                             
+                            {% else %}
+                                <img class="card-img-top post-img" src="{% static 'images/man-using.jpg' %}"/>
+                            {% endif %}
+                            <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
+
+                            <!-- Overlay -->
+                            <div class="overlay d-flex align-items-end justify-content-start p-3">
+                                {% if item.score %}
+                                    <div class="d-flex align-items-center text-white">
+                                        <div class="small fw-bold">{{ item.score }} {% if item.score == '1' %} punto {% else %} puntos {% endif %} </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    {% endwith %}
                 {% endfor %}
-            </ul>
-            {% endblock %}
+            </div>
         </div>
 
 
-    </body>
+        
+    </div>
+{% endblock contenido_edit %}
+
+</section>
 {% endblock content %}

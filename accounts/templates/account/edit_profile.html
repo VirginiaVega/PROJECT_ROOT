@@ -1,12 +1,59 @@
-{% extends 'account/profile.html' %}
+{% extends "aposts/index.html" %}
 
-{% block contenido %}
-<div>
-    <h2>Editar perfil</h2>        
-    <form method="post">
-        {% csrf_token %}
-        {{ mi_form.as_p }}            
-    <button type="submit">Guardar cambios</button>
+{% block content %}
+<div class="container px-5" >
+    <!-- titulo -->
+    <div class="row gx-1 align-items-center mb-2">    
+        <h3 class="fw-bolder border-bottom pb-2 ">Opciones de seguridad</h3>    
+    </div>
+
+    <form method="post" novalidate>
+    {% csrf_token %}
+
+    <div class="col-lg-4 mb-3">
+        <!-- email -->
+        <label for="email" class="form-label">Correo de recuperación</label>
+        <input type="email" id="email" name="email" 
+            class="form-control mb-2 {% if mi_form.email.errors %}is-invalid{% endif %}" 
+            value="{{ mi_form.email.value|default_if_none:'' }}">
+        {% for error in mi_form.email.errors %}
+            <div class="invalid-feedback">{{ error }}</div>
+        {% endfor %}
+
+
+        <!--Password-->
+        <label for="password1" class="form-label">Contraseña</label>
+        <input type="password" id="password1" name="password1" 
+            class="form-control mb-2 {% if mi_form.password1.errors %}is-invalid{% endif %}">
+        {% for error in mi_form.password1.errors %}
+            <div class="invalid-feedback">{{ error }}</div> 
+        {% endfor %}
+
+
+        <!--Password validator-->
+        <label for="password2" class="form-label">Validar</label>
+        <input type="password" id="password2" name="password2" 
+            class="form-control mb-2 {% if mi_form.password2.errors %}is-invalid{% endif %}">
+            {% for error in mi_form.password2.errors %}
+                <div class="invalid-feedback">{{ error }}</div>
+            {% endfor %}
+
+        
+        <div class="form-floating mb-3">
+            {% for error in mi_form.non_field_errors %}
+                <div class="text-center text-danger mb-3">{{ error }}</div> 
+            {% endfor %}
+        </div>
+
+
+
+        <button type="submit" class="btn btn-primary mt-3">Guardar</button>             
+    </div>
+
     </form>
 </div>
+
 {% endblock %}
+
+
+
