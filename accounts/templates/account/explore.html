@@ -1,9 +1,70 @@
 {% extends 'aposts/index.html' %}
-
+{% load static %}
 {% block content %}
-<div>
-    <h3>Explorar             -        Agregar buscador </h3>
-</div>
-<hr/>
-<p>Por defecto aparecen las publicaciones con mejor puntaje</p>
+<section class="py-0 mb-4 ">
+
+        <!-- ENCABEZADO -->
+            <div class="container px-2 pt-2">
+                <div class="d-flex align-items-center text-center px-5 mx-5 ">
+                    <div class="col-6 d-flex justify-content-end px-4">
+                        <a class="text-decoration-none" href="{% url 'explore'%}?type=r">Random Qualifs</a>
+                    </div>
+                    <div class="col-6 d-flex justify-content-start px-4 " >
+                        <!-- Formulario que envía la búsqueda -->
+                        <form method="GET" action="{% url 'search' %}" class="w-50">
+                            <input class="border-0 bg-transparent ps-2" 
+                                name="q" type="text" style="font-family: inherit; color: #bb86fc; width: 100%;" 
+                                placeholder="Buscar perfil" aria-label="Buscar perfil"
+                                value="{{ query|default:'' }}" />
+                        </form>                        
+                    </div> 
+                </div>
+                <hr class="my-2"/>
+            </div>
+        
+
+    <div class="container px-5 my-0" >
+        {% block searching %}
+
+        {% endblock searching %}
+
+         {% if request.GET.type == 't' %}
+            <div class="text-center" >
+            <p class="lead fw-normal text-muted my-4">TOP Mejores calificados</p> 
+            </div>
+        {% endif %}
+
+        <!-- PUBLICACIONES -->
+        <div class="row gx-1 align-items-center">
+            <div class="row px-5 justify-content-center contenido">
+                {% for p in posts %}
+                <div class="col-lg-4 mb-5">
+                    <div class="card h-100 shadow border-0 position-relative overflow-hidden">
+                        {% if p.image %}
+                            <img class="card-img-top post-img" src="{{ p.image.url }}" alt="{{ p.title }}" />                             
+                        {% else %}
+                            <img class="card-img-top post-img" src="{% static 'images/man-using.jpg' %}"/>
+                        {% endif %}
+                        <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
+
+                        <!-- Overlay -->
+                        <div class="overlay d-flex align-items-end justify-content-start p-3">
+                            <div class="d-flex align-items-center text-white">
+                                <div class="small fw-bold">
+                                    {{ p.total_scores|default:0 }} 
+                                    {% if p.total_scores == 1 %} Qualif {% else %} Qualifs {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        
+
+
+    </div>
+</section>
 {% endblock %}

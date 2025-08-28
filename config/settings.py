@@ -164,3 +164,6 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "virginiavega553@gmail.com"
 EMAIL_HOST_PASSWORD = "aqqe yldr nnpl rqeg"
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+
+

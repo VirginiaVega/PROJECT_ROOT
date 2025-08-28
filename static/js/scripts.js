@@ -8,36 +8,36 @@
 
 
 // body Dark Mode 
-document.addEventListener("DOMContentLoaded", function() {
-    const body = document.body;
-    const toggleBtn = document.getElementById("darkModeToggle");
+// document.addEventListener("DOMContentLoaded", function() {
+//     const body = document.body;
+//     const toggleBtn = document.getElementById("darkModeToggle");    
 
-    // Por defecto: oscuro, a menos que el usuario haya guardado "light"
-    if (localStorage.getItem("dark-mode") === "light") {
-        body.classList.remove("dark-mode");
-    } else {
-        body.classList.add("dark-mode");
-    }
+//         // Por defecto: oscuro, a menos que el usuario haya guardado "light"
+//     if (localStorage.getItem("dark-mode") === "light") {
+//         body.classList.remove("dark-mode");
+//     } else {
+//         body.classList.add("dark-mode");
+//     }
 
-    if (toggleBtn) {
-        function updateButtonText() {
-            toggleBtn.textContent = body.classList.contains("dark-mode")
-                ? "☀️ Modo claro"
-                : "🌙 Modo oscuro";
-        }
-        updateButtonText();
+//     if (toggleBtn) {
+//         function updateButtonText() {
+//             toggleBtn.textContent = body.classList.contains("dark-mode")
+//                 ? "☀️ Modo claro"
+//                 : "🌙 Modo oscuro";
+//         }
+//         updateButtonText();
 
-        toggleBtn.addEventListener("click", function() {
-            body.classList.toggle("dark-mode");
-            if (body.classList.contains("dark-mode")) {
-                localStorage.setItem("dark-mode", "dark");
-            } else {
-                localStorage.setItem("dark-mode", "light");
-            }
-            updateButtonText();
-        });
-    }
-});
+//         toggleBtn.addEventListener("click", function() {
+//             body.classList.toggle("dark-mode");
+//             if (body.classList.contains("dark-mode")) {
+//                 localStorage.setItem("dark-mode", "dark");
+//             } else {
+//                 localStorage.setItem("dark-mode", "light");
+//             }
+//             updateButtonText();
+//         });
+//     }
+// });
 
 
 // postForm

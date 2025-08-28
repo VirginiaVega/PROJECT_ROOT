@@ -4,7 +4,7 @@
 
 /* ===== Fondo y texto global ===== */
 body.dark-mode {
-    background-color: #121212;
+    background-color: #121212; 
     color: #ffffff;
 }
 
@@ -48,7 +48,7 @@ body.dark-mode .form-control:focus {
     box-shadow: 0 0 0 0.2rem rgba(187, 134, 252, 0.25);
 }
 body.dark-mode .form-control::placeholder {
-    color: #aaa;
+    color: #ccc;
     opacity: 1;
 }
 body.dark-mode .form-floating label {
@@ -128,6 +128,11 @@ body.dark-mode a:hover {
 }
 
 
+
+
+
+
+
 /* Overlay oscuro al pasar el mouse FILTRO*/
 .card .overlay {
     position: absolute;
@@ -163,6 +168,8 @@ body.dark-mode a:hover {
 }
 
 
+
+
 /*Vista previa crear img*/
 #previewCanvas {
     display: block;
@@ -171,4 +178,7 @@ body.dark-mode a:hover {
     border: 2px solid #ccc;
     object-fit: cover;
 }
+
+
+
 

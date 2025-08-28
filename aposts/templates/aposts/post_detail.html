@@ -28,11 +28,21 @@
                     <h2 class="fw-bolder mb-2">{{ post.title }}</h2>
                     <p class="fw-normal text-muted mb-4">{{ post.body }}</p>
                     <div class="d-flex align-items-center mt-3">
-                        <img class="rounded-circle me-2" src="{{ post.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+
+                        <!-- Al hacer click aca lleva al perfil -->
+                         <div class="position-relative overflow-hidden">
+                            <img class="rounded-circle me-2" src="{{ post.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+                            <a class="text-decoration-none link-dark stretched-link" href="{% url 'perfil' author.username %}"></a>
+                         </div>                        
                         <div>
-                            <div>{{ author.username }}</div>
+                            <div class="position-relative overflow-hidden">
+                                {{ author.username }}
+                                <a class="text-decoration-none link-dark stretched-link" href="{% url 'perfil' author.username %}"></a>
+                            </div> 
                             <div class="text-muted" style="font-size: 0.9rem;">{{ post.created_at|date:"F j, Y" }}</div>
                         </div>
+
+
                         {% if user == author %}
                         <div class="ms-5">
                             <a class="btn btn-primary text-white m-1 p-2" href="{% url 'publicacion_editar' pk=post.pk %}">Editar</a>
@@ -71,8 +81,9 @@
                                 <div class="d-flex mb-2 align-items-center justify-content-between" >
                                     <div class="d-flex" >
                                         <!-- imagen -->
-                                        <div class="flex-shrink-0" >
+                                        <div class="flex-shrink-0 position-relative overflow-hidden" >
                                             <img class="rounded-circle" src="{{ comment.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;"/>
+                                            <a class="text-decoration-none link-dark stretched-link" href="{% url 'perfil' comment.user.username %}"></a>
                                         </div>
 
                                         <!-- user fecha comentario -->
@@ -116,33 +127,59 @@
             <!-- VALORACION -->
             <div class="col-lg-6" >
                 <div class="position-relative m-2 " >                    
-                    <div class="card p-4 ">
+                    <div class="card p-3 ">
                         <div class="small fw-bold ">
 
                             <!-- Ver puntajes -->
                             <h2>Valoración</h2>
-                            <p class="text-muted">Qualifs</p>
+                            <p class="text-muted">{{ total_scores }} - Qualifs</p>
                             <ul class="list-unstyled ms-3">
-                                <li>1 {} - </li>
-                                <li>2 {} - </li>
-                                <li>3 {} - </li>
-                                <li>4 {} - </li>
-                                <li>5 {} - </li>
+                                <li>5 ⭐ - {{ score_distribution.5 }} </li>
+                                <li>4 ⭐ - {{ score_distribution.4 }} </li>
+                                <li>3 ⭐ - {{ score_distribution.3 }} </li>
+                                <li>2 ⭐ - {{ score_distribution.2 }} </li>
+                                <li>1 ⭐ - {{ score_distribution.1 }} </li>  
                             </ul>
                             <hr>
                             <!-- Agregar puntaje -->
                             <form method="post">
                                 {% csrf_token %}
-                                <input type="hidden" name="form_type" value="puntaje">
-
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <div class="col-lg-9">
-                                            <div class=" small d-grid"><h5>Selecciona una calificacion</h5></div>
-                                            <div class="d-grid mb-2">{{ score_form.score }}</div>
-                                            <div class="d-grid"><button class="btn btn-primary" type="submit">Guardar</button></div>
+                                <input type="hidden" name="form_type" value="puntaje">                                
+                                <div class="text-center">
+                                    <h5 class="mb-3">Seleccionar calificacion</h5>                                    
+                                    <!-- Rating con estrellas -->
+                                    <div class="star-rating mb-3">
+                                        {% for i in "12345" %}
+                                            <input type="radio" class="btn-check" name="score" id="score{{ i }}" value="{{ i }}" 
+                                                {% if score_form.instance.score == i %}checked{% endif %}>
+                                            <label class="btn btn-star" for="score{{ i }}">
+                                                <span class="star-empty">☆</span>
+                                                <span class="star-filled">⭐</span>
+                                            </label>
+                                        {% endfor %}
                                     </div>
+                                    <button class="btn btn-primary btn-sm" type="submit">
+                                        <i class="fas fa-save me-1"></i>Guardar
+                                    </button>
                                 </div>
                             </form>
+                            <!-- CALIFICACION ACTUAL -->
+                            {% if user_has_scored %}
+                            <div class="alert alert-light border mt-3">
+                                <small class="text-muted">Tu calificación actual:</small>
+                                <div class="text-warning">
+                                    {% with ''|center:score_form.instance.score as range %}
+                                        {% for _ in range %}⭐{% endfor %}
+                                    {% endwith %}
+                                    <span class="text-muted ms-2">({{ score_form.instance.score }}/5)</span>
+                                </div>
+                            </div>
+                            {% else %}
+                            <div class="alert alert-info border mt-3 text-center">
+                                <small>No has calificado este posteo</small>
+                            </div>
+                            {% endif %}
+
                         </div>
                     </div> 
                 </div>

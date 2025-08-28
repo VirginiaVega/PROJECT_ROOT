@@ -26,7 +26,7 @@ def borrar_imagen_post(sender, instance, **kwargs):
 
 
 class Score(models.Model):
-    score = models.CharField(max_length=1, choices=STARS, default='1')    
+    score = models.IntegerField(choices=STARS, default='1')  #Recomendado cambiar a models.IntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]) 
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='puntajes_posteo', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='puntajes_usuario', null=True, blank=True)
     def __str__(self):

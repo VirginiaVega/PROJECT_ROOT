@@ -8,7 +8,7 @@ from .models import Profile
 
 #Formulario para el registro de usuarios
 class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField()
+    email = forms.EmailField(label="Correo electrónico", required=True, error_messages={'invalid': 'Introduzca una dirección de correo electrónico válida. user register'})
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
     password2 = forms.CharField(label='Repetir contraseña', widget=forms.PasswordInput)
     
@@ -39,7 +39,7 @@ class UserRegisterForm(UserCreationForm):
 #Formulario para edicion de usuarios
 class UserEditForm(UserChangeForm):
     password = None 
-    email = forms.EmailField(label="Correo electrónico", required=True, error_messages={'invalid': 'Introduzca una dirección de correo electrónico válida.'})
+    email = forms.EmailField(label="Correo electrónico", required=True, error_messages={'invalid': 'Introduzca una dirección de correo electrónico válida. user edit'})
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput, required=False)
     password2 = forms.CharField(label='Validar', widget=forms.PasswordInput, required=False)
 
@@ -85,7 +85,5 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['description', 'avatar']
-
-
 
 

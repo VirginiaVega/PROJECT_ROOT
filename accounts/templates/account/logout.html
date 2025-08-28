@@ -1,5 +1,51 @@
 {% extends "aposts/index.html" %}
-
+{% load static %}
 {% block content %}
-<p>CERRASTE SESION</p>
+<div class="dark-mode py-3 px-4 px-md-5 mb-5">
+
+    <div class="row gx-5 justify-content-center">
+        <div class="col-lg-8 col-xl-6">
+            <div class="text-center">
+                <img  src="{% static 'images/qualif2.png' %}" width="300"  alt="Logo">
+                <p class="lead fw-normal text-muted my-3">Qualifs conecta creadores e inspiración en un solo lugar: compartí tu creatividad, explorá nuevas voces, premiá con Qualifs, comenta tus opiniones y llegá al top de los más destacados.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row gx-5 justify-content-center py-2"> </div>
+
+    <div class="row gx-5 row-cols-2 row-cols-lg-4 py-5 mx-5">
+        <div class="text-center">
+            <div class="col">
+                <div class="feature btn-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-file-post"></i></div>
+                <div class="h5 mb-2">Compartí tus ideas</div>
+                <p class="text-muted mb-0">Publicá tu contenido y mostrá tu creatividad.</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <div class="col"> 
+                <div class="feature btn-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-people"></i></div>
+                <div class="h5">Explorá otros creadores</div>
+                <p class="text-muted mb-0">Descubrí nuevas perspectivas e inspirate con el trabajo de otros.</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <div class="col">
+                <div class="feature btn-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-star-half"></i></div>
+                <div class="h5">Regalá Qualifs</div>
+                <p class="text-muted mb-0">Calificá con estrellas y reconoce a quienes más te inspiran.</p>
+            </div>
+        </div>
+        <div class="text-center">
+            <div class="col">
+                <div class="feature btn-primary bg-gradient text-white rounded-3 mb-3"><i class="bi bi-award"></i></div>
+                <div class="h5">Forma parte de los mejores calificados </div>
+                <p class="text-muted mb-0">Destacate en nuestro top y ganá visibilidad en la comunidad.</p>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
 {% endblock %}

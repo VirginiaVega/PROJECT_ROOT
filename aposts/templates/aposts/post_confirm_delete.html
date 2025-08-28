@@ -1,43 +1,45 @@
 {% extends 'aposts/index.html' %}
 {% load static %}
 {% block content %}
-<div class="container px-5" >
-        <!-- titulo -->
-        <div class="row gx-1 align-items-center ">    
-            <h3 class="fw-bolder  border-bottom pb-2">Confirmar eliminacion</h3>    
-        </div>
+<section class="py-0">
+    <div class="container px-5" >
+            <!-- titulo -->
+            <div class="row gx-1 align-items-center mt-1">    
+                <h3 class="fw-bolder  border-bottom pb-2">Confirmar eliminacion</h3>    
+            </div>
 
-        <form method="post">
-        {% csrf_token %}
+            <form method="post">
+            {% csrf_token %}
 
-        <section class="py-0" >
-                <div class="row gx-5 align-items-center mx-5" >
-                    
-                    <!-- titulo y descr -->
-                    <div class="col-lg-6">
-                        <h2 class="fw-bolder">{{ object.title }}</h2>
-                        <p class="lead fw-normal text-muted mb-2">{{ object.body |truncatechars:200 }}</p>
+            <section class="py-0" >
+                    <div class="row gx-5 align-items-center mx-5" >
+                        
+                        <!-- titulo y descr -->
+                        <div class="col-lg-6">
+                            <h2 class="fw-bolder">{{ object.title }}</h2>
+                            <p class="lead fw-normal text-muted mb-2">{{ object.body |truncatechars:200 }}</p>
 
-                        <div class="d-flex justify-content-center">
-                            <button class="btn btn-primary m-2 p-2" type="submit">Confirmar</button>
-                            <a class="btn btn-primary text-white m-2 p-2" role="button" href="{% url 'publicacion_detail' pk=post.pk %}">Cancelar</a>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-primary m-2 p-2" type="submit">Confirmar</button>
+                                <a class="btn btn-primary text-white m-2 p-2" role="button" href="{% url 'publicacion_detail' pk=post.pk %}">Cancelar</a>
+                            </div>
+
+
                         </div>
 
+                        <!-- imagen -->
+                        <div class="col-lg-6 " style="height:400px;" >
+                            {% if post.image %}
+                                <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded-3 h-100 w-100" style="object-fit:contain;"/>   
+                            {% else %}
+                                <img class="img-fluid rounded-3" src="{% static 'images/man-using.jpg' %}"/>
+                            {% endif %}
+                        </div>        
 
                     </div>
-
-                    <!-- imagen -->
-                    <div class="col-lg-6 " style="height:400px;" >
-                        {% if post.image %}
-                            <img src="{{ post.image.url }}" alt="{{ post.title }}" class="img-fluid rounded-3 h-100 w-100" style="object-fit:contain;"/>   
-                        {% else %}
-                            <img class="img-fluid rounded-3" src="{% static 'images/man-using.jpg' %}"/>
-                        {% endif %}
-                    </div>        
-
-                </div>
-        </section>
-        </form>
-  
-</div>
+            </section>
+            </form>
+    
+    </div>
+</section>
 {% endblock %}

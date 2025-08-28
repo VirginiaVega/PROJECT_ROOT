@@ -1,35 +1,39 @@
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, UserEditForm, CustomAuthenticationForm #AuthenticationForm es el original de Django, personalice los msjes con este Custom
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth import login, logout
 from aposts.models import Post, Score
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
-from .models import Profile
 from .forms import ProfileForm
+from django.db.models import Sum, Value, Q
+from django.db.models.functions import Coalesce
+from datetime import datetime, timedelta
+from django.contrib.auth import views as auth_views
+from django.contrib import messages
 # Create your views here.
 
-#Explorar
-@login_required(login_url='login')
-def explore(request):
-	return render(request, "account/explore.html")
+
+#1
+class CustomPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
+    def get(self, request, *args, **kwargs):
+        messages.success(request, '¡La contraseña se modifico con exito!')
+        return redirect('login')
 
 
-#Editar datos, foto y descripcion
+#Explore TOP y Random posts
 @login_required(login_url='login')
-def edit(request, username):
-    perfil_user = get_object_or_404(User, username=username)
-    if perfil_user != request.user: #validar que el user que accede sea el logueado
-        return redirect('perfil', username=request.user.username)    
-    profile = perfil_user.profile
-    if request.method == "POST":
-        form = ProfileForm(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('perfil', username=request.user.username)
+def explore(request): 
+    type = request.GET.get('type', 't')
+    last_month = datetime.now().date() - timedelta(days=30) 
+    if type == 't':
+        posts= Post.objects.filter(created_at__date__gte=last_month).annotate(total_scores=Coalesce(Sum('puntajes_posteo__score'), Value(0))).filter(total_scores__gt=0).order_by('-total_scores')
     else:
-        form = ProfileForm(instance=profile)
-    return render(request, "account/edit_data.html", {'perfil_user': perfil_user, 'form': form,})
+        #Si los archivos se vuelven muchos hay que considerar una alernativa para tablas grandes
+        posts= Post.objects.filter(created_at__date__gte=last_month).annotate(total_scores=Coalesce(Sum('puntajes_posteo__score'), Value(0))).filter(total_scores__gt=0).order_by('?')  
+    context = {'posts': posts}
+    return render(request, "account/explore.html", context)
+
 
 
 #Perfil
@@ -50,13 +54,15 @@ def mi_perfil(request, username):
 
 #login
 def login_request(request):
+    if request.user.is_authenticated: #Si el usuario no cerro sesion antes de cerrar el sitio
+        return redirect('publicacion_list') #redirige a inicio    
     if request.method == "POST": #se hizo click en enviar POST
         form = CustomAuthenticationForm(request, data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
             return redirect('publicacion_list')
     else:
-        form = CustomAuthenticationForm()#si recien ingresa a la pantalla del login muestra el form vacio GET   
+        form = CustomAuthenticationForm()    
     return render(request, "account/login.html", {"form": form})
 
 
@@ -74,6 +80,7 @@ def register(request):
     return render(request, "account/register.html", {"form": form})
 
 
+
 #editar perfil PSW MAIL
 @login_required(login_url='login')
 def editar_perfil(request):
@@ -87,3 +94,23 @@ def editar_perfil(request):
     else:
         miFormulario = UserEditForm(instance=usuario)
     return render(request, "account/edit_profile.html", {"mi_form": miFormulario, "usuario": usuario})
+
+
+
+
+
+#Editar datos, foto y descripcion
+@login_required(login_url='login')
+def edit(request, username):
+    perfil_user = get_object_or_404(User, username=username)
+    if perfil_user != request.user: #validar que el user que accede sea el logueado
+        return redirect('perfil', username=request.user.username)    
+    profile = perfil_user.profile
+    if request.method == "POST":
+        form = ProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('perfil', username=request.user.username)
+    else:
+        form = ProfileForm(instance=profile)
+    return render(request, "account/edit_data.html", {'perfil_user': perfil_user, 'form': form,})
