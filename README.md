@@ -35,7 +35,7 @@ Forma parte de mi portafolio profesional y busca demostrar tanto conocimientos t
 - [Modelo del dominio](/docs/modelo_dominio.md)  
 - [Casos de uso](/docs/casos_uso.md)  
 - [Product Backlog](/docs/backlog.md)  
-- [Diagrama de clases](/docs/diagrama_clases.png)  
+- [Diagrama de clases](/docs/img/diagrama_clases.png)  
 
 ## Instalar y ejecutar Qualifs:
 
