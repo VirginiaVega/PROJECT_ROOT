@@ -1,30 +1,24 @@
 {% extends 'account/explore.html' %}
 {% load static %}
 {% block searching %}
-<div class="row justify-content-center" >
+    <div class="row justify-content-center" >
         <div class="text-center" >
             <p class="lead fw-normal text-muted my-3">Perfiles encontrados</p>
-
             <div class="row gx-5 row-cols-1 row-cols-sm-2 row-cols-xl-4 justify-content-center">
                 {% for perfil in resultados %}
                     <div class="col pb-3 mb-xl-0" > 
-                         <!-- CARD contenedor con position-relative -->
                         <div class="position-relative overflow-hidden" >
                             <div class="text-center p-2 m-3">
-                                <!-- Avatar del perfil -->
                                 <img class="rounded-circle" src="{{ perfil.avatar.url }}" alt="{{ perfil.user.username }}" width="150" height="150" style="object-fit: cover;">
-                                <!-- Nombre de usuario -->
                                 <h5 class="fw-bolder mt-2">{{ perfil.user.username }}</h5>      
                                 <p class="lead fw-normal text-muted mb-5">{{ perfil.total_posts }}
                                     {% if perfil.total_posts == 1 %} Post {% else %} Posts {% endif %}
                                 </p>                      
-                                <!-- Click al perfil -->
                                 <a class="text-decoration-none link-dark stretched-link" href="{% url 'perfil' perfil.user.username %}"></a>
                             </div>
                         </div>
                     </div>
                 {% empty %}
-                    <!-- Mensaje si no hay resultados -->
                     <div class="col-12 text-center">
                         {% if query %}
                             <p class="text-muted">No hay resultados</p>
@@ -36,6 +30,6 @@
             </div>
 
         </div>
-</div>
+    </div>
 {% endblock searching %}
 

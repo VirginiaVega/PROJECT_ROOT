@@ -3,13 +3,13 @@ from .models import Score, Comment
 from .choises import  STARS
 
 
-#Formulario para que puedan agregar puntaje a una publicacion
+#Form for adding a score to a post
 class ScoreForm(forms.ModelForm):
     class Meta:
         model = Score
         fields = ['score']
         widgets = {
-            'score': forms.Select(choices=STARS)  # Usa las mismas choices
+            'score': forms.Select(choices=STARS)
         }
 
 class CommentForm(forms.ModelForm):

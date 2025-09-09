@@ -5,10 +5,9 @@ from .models import Post, Score
 class PublicacionAdmin(admin.ModelAdmin):
     list_display=('title', 'body')
 
-
 admin.site.register(Post, PublicacionAdmin)
 
 class PuntajeAdmin(admin.ModelAdmin):
-    list_display = ('score', 'post')  # Mostrar los puntajes y la publicación asociada
-    ordering = ('post',)  # Ordenar por la publicación
+    list_display = ('score', 'post') 
+    ordering = ('post',) 
 admin.site.register(Score, PuntajeAdmin)

@@ -7,13 +7,13 @@ from django.dispatch import receiver
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.TextField(blank=True, null=True)
-    avatar = models.ImageField(upload_to="avatars/", default="avatars/default.jpg") #guardá un default.png en /media/avatars/
+    avatar = models.ImageField(upload_to="avatars/", default="avatars/default.jpg")
 
     def __str__(self):
         return f"Perfil de {self.user.username}"
 
 
-#el perfil se crea automatico al registrar un usuario
+#create profile when creating user
 @receiver(post_save, sender=User)
 def create_or_update_user_profile(sender, instance, created, **kwargs):
     if created:

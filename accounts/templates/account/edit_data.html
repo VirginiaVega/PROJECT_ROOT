@@ -10,7 +10,7 @@
             {% csrf_token %}
             <div class="col-lg-6 p-3"> 
 
-                <!-- imagen-->
+                <!-- image -->
                 <label for="body" class="form-label">Imagen</label> 
                 <div class=" my-3 d-flex align-items-end">  
                     <div class="pe-3">
@@ -24,13 +24,13 @@
                     </div>                    
                 </div>
 
-                <!-- descripcion -->
+                <!-- description -->
                 <div class="mb-3">
                     <label for="description" class="form-label">Descripción de perfil</label>
                     <textarea name="description" id="id_description" rows="3" class="form-control" oninput="autoResize(this)">{{ perfil_user.profile.description|default_if_none:'' }}</textarea>
                 </div>    
 
-                <!-- boton -->
+                <!-- button -->
                 <button type="submit" class="btn btn-primary">Guardar</button>
             </div>
         </form>
@@ -39,7 +39,7 @@
 </div>
 
 
-<!-- Script SOLO para la vista previa -->
+<!-- preview -->
 <script>
 document.addEventListener("DOMContentLoaded", function() {
     const input = document.getElementById("avatarInput");

@@ -8,17 +8,15 @@ from django.dispatch import receiver
 class Post(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField(max_length=1000)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posteo', null=True, blank=True)  # Relación con el modelo User
-    created_at = models.DateTimeField(auto_now_add=True)  # Fecha y hora de creación
-    image = models.ImageField(upload_to='entradas/', null=True, blank=True)  # Imagen opcional
-    # Método para mostrar el título y el nombre de usuario al representar el objeto
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posteo', null=True, blank=True) 
+    created_at = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='entradas/', null=True, blank=True)
     def __str__(self):
         return f'{self.title} - {self.user.username if self.user else "Anónimo"}'
     class Meta:
-        ordering = ['-created_at']  # Ordenar por fecha de creación (de más reciente a más antiguo)
+        ordering = ['-created_at']  
 
-
-# ELIMINAR IMAGEN FISICA AL ELIMINAR EL POST
+# if delete post, image too 
 @receiver(post_delete, sender=Post)
 def borrar_imagen_post(sender, instance, **kwargs):
     if instance.image:
@@ -26,7 +24,7 @@ def borrar_imagen_post(sender, instance, **kwargs):
 
 
 class Score(models.Model):
-    score = models.IntegerField(choices=STARS, default='1')  #Recomendado cambiar a models.IntegerField(choices=[(1, '1'), (2, '2'), (3, '3'), (4, '4'), (5, '5')]) 
+    score = models.IntegerField(choices=STARS, default='1') 
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='puntajes_posteo', null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='puntajes_usuario', null=True, blank=True)
     def __str__(self):
@@ -35,14 +33,15 @@ class Score(models.Model):
         verbose_name = 'Puntaje'
         verbose_name_plural = 'Puntajes'
 
+
 class Comment(models.Model):
     comment = models.TextField(max_length=200)  
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comentarios')  # Relación con el modelo Post, para saber a qué publicación pertenece el comentario
-    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Relación con el modelo User, para saber qué usuario escribió el comentario
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comentarios')
+    user = models.ForeignKey(User, on_delete=models.CASCADE) 
     created_at = models.DateTimeField(auto_now_add=True)  
     def __str__(self):
         return f'{self.user.username}: {self.comment[:30]}...'  
     class Meta:
         verbose_name = 'Comentario' 
         verbose_name_plural = 'Comentarios'
-        ordering = ['-created_at']  # Orden de los comentarios por fecha de creación, de más reciente a más antiguo
+        ordering = ['-created_at']  

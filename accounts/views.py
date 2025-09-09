@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import UserRegisterForm, UserEditForm, CustomAuthenticationForm #AuthenticationForm es el original de Django, personalice los msjes con este Custom
+from .forms import UserRegisterForm, UserEditForm, CustomAuthenticationForm 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, logout
 from aposts.models import Post, Score
@@ -14,7 +14,7 @@ from django.contrib import messages
 # Create your views here.
 
 
-#1
+#Mensaje personalizado al modificar Pswrd
 class CustomPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
     def get(self, request, *args, **kwargs):
         messages.success(request, '¡La contraseña se modifico con exito!')
@@ -26,48 +26,19 @@ class CustomPasswordResetCompleteView(auth_views.PasswordResetCompleteView):
 def explore(request): 
     type = request.GET.get('type', 't')
     last_month = datetime.now().date() - timedelta(days=30) 
-    if type == 't':
+    if type == 't': #Posts order by Score
         posts= Post.objects.filter(created_at__date__gte=last_month).annotate(total_scores=Coalesce(Sum('puntajes_posteo__score'), Value(0))).filter(total_scores__gt=0).order_by('-total_scores')
-    else:
-        #Si los archivos se vuelven muchos hay que considerar una alernativa para tablas grandes
+    else: #Posts order by random
+        #Scale
         posts= Post.objects.filter(created_at__date__gte=last_month).annotate(total_scores=Coalesce(Sum('puntajes_posteo__score'), Value(0))).filter(total_scores__gt=0).order_by('?')  
     context = {'posts': posts}
     return render(request, "account/explore.html", context)
 
 
 
-#Perfil
-@login_required(login_url='login')
-def mi_perfil(request, username):
-     perfil_user = get_object_or_404(User, username=username) 
-     tipo = request.GET.get('tipo', 'posteos')  # 'posteos' por defecto
-     if tipo == 'calificados' and perfil_user == request.user:
-        publicaciones = [
-            {"post": score.post, "score": score.score}
-            for score in Score.objects.filter(user=request.user).select_related("post").order_by("-post__created_at")
-        ]
-     else:
-        publicaciones = [{"post": p, "score": None} for p in Post.objects.filter(user=perfil_user)]
-     return render(request, "account/profile.html",{'perfil_user': perfil_user, 'publicaciones': publicaciones, 'tipo': tipo})
 
 
-
-#login
-def login_request(request):
-    if request.user.is_authenticated: #Si el usuario no cerro sesion antes de cerrar el sitio
-        return redirect('publicacion_list') #redirige a inicio    
-    if request.method == "POST": #se hizo click en enviar POST
-        form = CustomAuthenticationForm(request, data=request.POST)
-        if form.is_valid():
-            login(request, form.get_user())
-            return redirect('publicacion_list')
-    else:
-        form = CustomAuthenticationForm()    
-    return render(request, "account/login.html", {"form": form})
-
-
-
-#registrar usuario
+#register user
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -81,9 +52,23 @@ def register(request):
 
 
 
-#editar perfil PSW MAIL
+#login
+def login_request(request):
+    if request.user.is_authenticated:
+        return redirect('publicacion_list')  
+    if request.method == "POST":
+        form = CustomAuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return redirect('publicacion_list')
+    else:
+        form = CustomAuthenticationForm()    
+    return render(request, "account/login.html", {"form": form})
+
+
+#edit profile: password and email (security)
 @login_required(login_url='login')
-def editar_perfil(request):
+def editProfileSecurity(request):
     usuario = request.user
     if request.method == 'POST':
         miFormulario = UserEditForm(request.POST, instance=usuario)
@@ -96,14 +81,27 @@ def editar_perfil(request):
     return render(request, "account/edit_profile.html", {"mi_form": miFormulario, "usuario": usuario})
 
 
-
-
-
-#Editar datos, foto y descripcion
+#Profile: own posts, other posts, score posts
+#perfilConsultQualifsConsult()
 @login_required(login_url='login')
-def edit(request, username):
+def perfilConsult(request, username):
+     perfil_user = get_object_or_404(User, username=username) 
+     tipo = request.GET.get('tipo', 'posteos')
+     if tipo == 'calificados' and perfil_user == request.user:
+        publicaciones = [
+            {"post": score.post, "score": score.score}
+            for score in Score.objects.filter(user=request.user).select_related("post").order_by("-post__created_at")
+        ]
+     else:
+        publicaciones = [{"post": p, "score": None} for p in Post.objects.filter(user=perfil_user)]
+     return render(request, "account/profile.html",{'perfil_user': perfil_user, 'publicaciones': publicaciones, 'tipo': tipo})
+
+
+#edit profile: avatar and description
+@login_required(login_url='login')
+def editProfile(request, username):
     perfil_user = get_object_or_404(User, username=username)
-    if perfil_user != request.user: #validar que el user que accede sea el logueado
+    if perfil_user != request.user:
         return redirect('perfil', username=request.user.username)    
     profile = perfil_user.profile
     if request.method == "POST":

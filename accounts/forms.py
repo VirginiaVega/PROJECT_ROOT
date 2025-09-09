@@ -6,7 +6,7 @@ from django.core.exceptions import ValidationError
 from .models import Profile
 
 
-#Formulario para el registro de usuarios
+#User registration form
 class UserRegisterForm(UserCreationForm):
     email = forms.EmailField(label="Correo electrónico", required=True, error_messages={'invalid': 'Introduzca una dirección de correo electrónico válida. user register'})
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput)
@@ -36,22 +36,22 @@ class UserRegisterForm(UserCreationForm):
         return p2
 
 
-#Formulario para edicion de usuarios
+#User edit form
 class UserEditForm(UserChangeForm):
     password = None 
     email = forms.EmailField(label="Correo electrónico", required=True, error_messages={'invalid': 'Introduzca una dirección de correo electrónico válida. user edit'})
     password1 = forms.CharField(label='Contraseña', widget=forms.PasswordInput, required=False)
     password2 = forms.CharField(label='Validar', widget=forms.PasswordInput, required=False)
 
-    class Meta: #esta clase trae el mail del usuario para verlo en pantalla
+    class Meta:
         model = User
         fields = ['email'] 
 
-    def clean(self):#metodo de validacion de contraseñas
+    def clean(self):#validate
         cleaned_data = super().clean()
         p1 = cleaned_data.get('password1')
         p2 = cleaned_data.get('password2')
-        if p1 or p2:#compara
+        if p1 or p2:
             if p1 != p2:
                 raise forms.ValidationError("Las contraseñas no coinciden.")
             try:
@@ -64,13 +64,13 @@ class UserEditForm(UserChangeForm):
     def save(self, commit=True):
         user = super().save(commit=False) 
         if self.cleaned_data['password1']: 
-            user.set_password(self.cleaned_data['password1']) #update usando set_password, guarda contraseña como HASH
+            user.set_password(self.cleaned_data['password1']) 
         if commit: 
             user.save() 
         return user
 
 
-#Mensajes personalizados
+
 class CustomAuthenticationForm(AuthenticationForm):
     error_messages = {
         'invalid_login': (
@@ -80,7 +80,7 @@ class CustomAuthenticationForm(AuthenticationForm):
     }
 
 
-#Formulario para editar el perfil
+#Profile edit form
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile

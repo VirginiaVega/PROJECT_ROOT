@@ -3,14 +3,13 @@
 {% block content %}
 <section class="py-0 mb-4 ">
 
-        <!-- ENCABEZADO -->
             <div class="container px-2 pt-2">
                 <div class="d-flex align-items-center text-center px-5 mx-5 ">
                     <div class="col-6 d-flex justify-content-end px-4">
                         <a class="text-decoration-none" href="{% url 'explore'%}?type=r">Random Qualifs</a>
                     </div>
                     <div class="col-6 d-flex justify-content-start px-4 " >
-                        <!-- Formulario que envía la búsqueda -->
+                        <!-- Form that sends the search -->
                         <form method="GET" action="{% url 'search' %}" class="w-50">
                             <input class="border-0 bg-transparent ps-2" 
                                 name="q" type="text" style="font-family: inherit; color: #bb86fc; width: 100%;" 
@@ -34,7 +33,7 @@
             </div>
         {% endif %}
 
-        <!-- PUBLICACIONES -->
+        <!-- POSTS -->
         <div class="row gx-1 align-items-center">
             <div class="row px-5 justify-content-center contenido">
                 {% for p in posts %}

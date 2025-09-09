@@ -5,22 +5,18 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>{% block title %}Project Root{% endblock %}</title>
+        <meta name="description" content="The site allows creation, updating and exploration of publications, with additional features like user comments and ratings." />
+        <meta name="author" content="Virginia Vega" />
+        <title>{% block title %}Qualifs{% endblock %}</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
         <!-- Bootstrap icons-->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
-        <!-- Bootstrap 5 JS Bundle (incluye Popper) PARA HACER EL DESPLEGABLE -->
+        <!-- Bootstrap 5 JS Bundle  -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
         <link href="{% static 'css/dark-mode.css' %}" rel="stylesheet">
-
-
         <script src="{% static 'js/scripts.js' %}"></script>
 
     </head>
@@ -31,7 +27,7 @@
         <!-- Navigation-->
             <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
                 <div class="container px-5">
-                    {% if user.is_authenticated %}<!--AUTENTICADO/DENTRO-->
+                    {% if user.is_authenticated %}<!--authenticate-->
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center" >
                         <li class="nav-item">
                             <a class="navbar-brand" href="{% url 'publicacion_list' %}"><img  src="{% static 'images/qualif1.png' %}" width="160"  alt="Logo"></a>
@@ -40,8 +36,7 @@
                     </ul>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-
-                        <!--DESPLEGABLE ORIGINAL-->
+                        <!-- Foldable -->
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0" >
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle fs-5 p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,10 +44,9 @@
                                     <img class="rounded-circle" src="{{ user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                     <li><a class="dropdown-item" href="{% url 'perfil' request.user.username %}">Perfil</a></li> <!--request.user siempre es el usuario logueado en ese momento -->
+                                     <li><a class="dropdown-item" href="{% url 'perfil' request.user.username %}">Perfil</a></li> 
                                     <li><a class="dropdown-item" href="{% url 'publicacion_crear' %}">Crear</a></li>
                                     <li><a class="dropdown-item" href="{% url 'edit_profile' %}">Seguridad</a></li>
-                                    <!-- <li><button type="button" class="dropdown-item" id="darkModeToggle">🌙 Modo oscuro</button></li> -->
                                     <li><hr class="dropdown-divider"></li>
                                     <li>
                                         <form method="POST" action="{% url 'logout' %}">
@@ -63,7 +57,7 @@
                                 </ul>
                             </li>
                         </ul>  
-                    {% else %}<!--NO AUTENTICADO/FUERA-->
+                    {% else %}<!-- not authenticate -->
                         <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Iniciar sesion</a></li>
                             <li class="nav-item"><a class="nav-link" href="{% url 'registro'%}">Registrarse</a></li>
@@ -77,7 +71,7 @@
 
 
 
-            <!-- Contenido principal de la página -->
+            <!-- Main content -->
     <div class="content">
         {% block content %}
 

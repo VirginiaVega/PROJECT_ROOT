@@ -40,6 +40,7 @@
 // });
 
 
+
 // postForm
 document.addEventListener('DOMContentLoaded', () => {
     const imageInput = document.getElementById('imageInput');

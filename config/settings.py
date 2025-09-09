@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-pbmg2$j8!3b0at*@*qa2f(5yk-nj3x0@fwfdn!+x68y+#tcc3r'
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = config("DEBUG", default=False, cast=bool)
 
 ALLOWED_HOSTS = []
 
@@ -84,11 +86,11 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'project_root',
-        'USER': 'postgres',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': config("DB_NAME"),
+        'USER': config("DB_USER"),
+        'PASSWORD': config("DB_PASSWORD"),
+        'HOST': config("DB_HOST", default="localhost"),
+        'PORT': config("DB_PORT", default=5432, cast=int),
     }
 }
 
@@ -118,7 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-#LANGUAGE_CODE = 'en-us'
+
 LANGUAGE_CODE = 'es'
 
 TIME_ZONE = 'UTC'
@@ -140,29 +142,25 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/'
 
-import os
 
-#imagenes estaticas por defecto
-#Esta linea es para  que django busque la carpeta static global creada cuando uses: {% static 'images/man-using.jpg' %} por ej
+
+#static images
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ] 
-
-#imagenes que el usuario carga, para que funcione necesito agregar el: + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-# en la urls.py del proyecto: config, en este caso
-MEDIA_URL = '/media/' #donde se guardan
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #como se acceden
+MEDIA_URL = '/media/' #where
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #how to access
 
 
 
 
-#1 Configuracion de recuperacion de contraseña con mail:
+# reset password with email:
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "virginiavega553@gmail.com"
-EMAIL_HOST_PASSWORD = "aqqe yldr nnpl rqeg"
+EMAIL_HOST = config("EMAIL_HOST")
+EMAIL_HOST_USER = config("EMAIL_USER")
+EMAIL_HOST_PASSWORD = config("EMAIL_PASSWORD")
+EMAIL_PORT = config("EMAIL_PORT", cast=int)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool)
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 

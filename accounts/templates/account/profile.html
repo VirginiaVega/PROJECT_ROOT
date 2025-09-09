@@ -5,7 +5,7 @@
 <section class="py-0 mb-4">
 
     <div class="container px-2">
-        <!-- NOMBRE DE USUARIO -->
+        <!-- USER NAME -->
         <div class="d-flex align-items-center">
             <img class="rounded-circle me-2" src="{{ perfil_user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
             <div>
@@ -26,14 +26,14 @@
     <div class="container px-5 my-0" >
         
 
-        <!-- DESCRIPCION -->
+        <!-- DESCRIPTION -->
         <div class="row gx-1 my-3" >
             <div class="col-12 col-md-10 mx-auto px-4 py-2 text-center"  >
                 <p class="fw-normal text-muted mb-3">{{ perfil_user.profile.description|default_if_none:"" }}</p>            
             </div>
         </div>        
 
-        <!-- OPCIONES Solo las ve si es el usuario logueado-->
+        <!-- OPTIONS-->
         {% if perfil_user == request.user %}
         <div class="row gx-1">
             <div class="col-12 text-center" >
@@ -50,7 +50,7 @@
         {% endif %}
 
 
-        <!-- PUBLICACIONES PROPIAS O CALIFICADAS-->
+        <!-- OWN POSTS-->
         <div class="row gx-1 align-items-center" >
             <div class="row px-5 justify-content-center contenido">
                     <!-- Card -->
