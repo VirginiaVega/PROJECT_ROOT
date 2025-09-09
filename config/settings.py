@@ -164,15 +164,27 @@ import dj_database_url
 # Ajustar ALLOWED_HOSTS
 ALLOWED_HOSTS = [config("RENDER_EXTERNAL_HOSTNAME", default=""), "localhost", "127.0.0.1"]
 
-# Sobrescribir configuración de base de datos SOLO si estamos en Render
-if config('DATABASE_URL', default=None):
+# Configuración de base de datos INTELIGENTE (¡CORREGIDO!)
+database_url = os.environ.get('DATABASE_URL')  # ← ¡USA os.environ.get()!
+if database_url:
+    # PRODUCCIÓN (Render): Usa PostgreSQL de Render
     DATABASES = {
-        'default': dj_database_url.config(
-            default=config('DATABASE_URL'),
-            conn_max_age=600,
-            ssl_require=True
-        )
+        'default': dj_database_url.parse(database_url, conn_max_age=600, ssl_require=True)
     }
+# Si no hay DATABASE_URL, se mantiene tu configuración PostgreSQL local
+
+
+
+
+# Sobrescribir configuración de base de datos SOLO si estamos en Render
+# if config('DATABASE_URL', default=None):
+#     DATABASES = {
+#         'default': dj_database_url.config(
+#             default=config('DATABASE_URL'),
+#             conn_max_age=600,
+#             ssl_require=True
+#         )
+#     }
 
 # Static files en producción
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
