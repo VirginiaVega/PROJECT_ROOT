@@ -16,12 +16,12 @@ from django.core.management import execute_from_command_line
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
 
 #for render star
-if not os.environ.get('DEBUG') and os.environ.get('RENDER'):
-    try:
-        print("🔄 Ejecutando migraciones en Render...")
-        execute_from_command_line(['manage.py', 'migrate'])
-    except Exception as e:
-        print(f"⚠️  Error en migraciones automáticas: {e}")
+try:
+    print("🔄 Ejecutando migraciones automáticamente...")
+    execute_from_command_line(['manage.py', 'migrate'])
+    print("✅ Migraciones completadas")
+except Exception as e:
+    print(f"❌ Error en migraciones: {e}")
 #for render end
 
 
