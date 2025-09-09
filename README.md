@@ -13,33 +13,8 @@ Forma parte de mi portafolio profesional y busca demostrar tanto conocimientos t
 - **Frontend:** HTML, CSS, JavaScript
 - **Control de versiones:** Git + GitHub
 
-tabla
 
 | <img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="30"> | <img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" width="60"> | <img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" width="30"> | <img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" width="30"> | <img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" width="30"> | <img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="30"> | <img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Git_format.png" width="30"> | <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" width="30"> |
-
-prueba
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" width="60" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" width="40" height="40" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Git_format.png" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-
-
-original
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://static.djangoproject.com/img/logos/django-logo-negative.png" width="60" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://www.w3.org/html/logo/badge/html5-badge-h-solo.png" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg" width="40" height="40" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/0/03/Git_format.png" width="30" height="30" style="display:inline-block; margin-right:5px;">
-<img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" width="30" height="30" style="display:inline-block; margin-right:5px;">
-
 
 
 ## Objetivos del proyecto
