@@ -158,23 +158,14 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 
-
-
-
-
-
-
-
-
-
 # === CONFIGURACIÓN PARA RENDER === #
 import dj_database_url
 
 # Ajustar ALLOWED_HOSTS
 ALLOWED_HOSTS = [config("RENDER_EXTERNAL_HOSTNAME", default=""), "localhost", "127.0.0.1"]
 
-# Configuración de base de datos para Render
-if not DEBUG:
+# Sobrescribir configuración de base de datos SOLO si estamos en Render
+if config('DATABASE_URL', default=None):
     DATABASES = {
         'default': dj_database_url.config(
             default=config('DATABASE_URL'),
@@ -182,7 +173,7 @@ if not DEBUG:
             ssl_require=True
         )
     }
-    
+
     # Static files en producción
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
