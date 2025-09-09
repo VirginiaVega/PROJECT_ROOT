@@ -80,6 +80,9 @@ http://127.0.0.1:8000/
 ⚠️ Nota: Este proyecto usa PostgreSQL como base de datos. Para ejecutarlo localmente, instalar PostgreSQL y crear una BD con las credenciales definidas en el archivo .env.
 
 ## Capturas de pantalla
+<img src="docs\img\img1.png">
+<img src="docs\img\img2.png">
+
 
 ## Autora
 Virginia Vega - Analista de sistemas orientada al desarrollo web. 2025
