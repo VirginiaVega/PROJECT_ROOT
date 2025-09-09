@@ -31,8 +31,8 @@
 
 # Diagramas UML
 
-<img src="img\cu1.png">
-<img src="img\cu2.png">
+<img src="img\CU1.png">
+<img src="img\CU2.png">
 
 
 
