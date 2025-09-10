@@ -89,4 +89,4 @@ Virginia Vega - Analista de sistemas orientada al desarrollo web. 2025
 
 📧 Contacto: virginiavegaok@gmail.com
 
-🌐 LinkedIn: (https://www.linkedin.com/in/virginia-vega-254b45263/)
+🌐 LinkedIn: linkedin.com/in/virginia-vega-ok
