@@ -42,7 +42,7 @@
                         {% if p.image %}
                             <img class="card-img-top post-img" src="{{ p.image.url }}" />                             
                         {% else %}
-                            <img class="card-img-top post-img" src="{% static 'images/man-using.jpg' %}"/>
+                            <img class="card-img-top post-img w-100 h-200" src="{% static 'images/man-using.jpg' %}"/>
                         {% endif %}
                         <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
 

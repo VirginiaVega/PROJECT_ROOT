@@ -48,9 +48,11 @@ class PublicacionCrear(LoginRequiredMixin, CreateView):
     template_name='aposts/post_form.html'
     success_url=reverse_lazy('publicacion_list')
     fields=['title','body', 'image']    
+
     # add user and cut image
     def form_valid(self, form):
         form.instance.user=self.request.user
+
         cropped_image_data = self.request.POST.get('cropped_image')
         if cropped_image_data:
             try:
@@ -61,6 +63,7 @@ class PublicacionCrear(LoginRequiredMixin, CreateView):
                 form.instance.image = file
             except Exception as e:
                 print("Error al procesar la imagen recortada:", e)
+                
         return super().form_valid(form)
 
 

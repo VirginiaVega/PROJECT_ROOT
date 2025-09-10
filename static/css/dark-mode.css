@@ -170,11 +170,19 @@ body.dark-mode a:hover {
 
 
 
-/*Vista previa crear img*/
+/*Vista previa de imagen AL CREAR*/ 
 #previewCanvas {
     display: block;
-    width: 300px;   /* igual que canvas.width */
-    height: 500px;  /* igual que canvas.height */
+    width: 400px;   /* igual que canvas.width */
+    height: 300px;  /* igual que canvas.height */
+    border: 2px solid #ccc;
+    /* object-fit: cover; */
+}
+
+.previewCanvas {
+    display: block;
+    width: 400px;   /* igual que canvas.width */
+    height: 300px;  /* igual que canvas.height */
     border: 2px solid #ccc;
     /* object-fit: cover; */
 }

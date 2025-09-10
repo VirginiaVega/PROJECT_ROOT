@@ -20,7 +20,7 @@
                         <label for="imageInput" class="btn btn-primary" style="opacity: 0.6; pointer-events: none;">Seleccionar imagen</label> 
                         <input type="file" id="imageInput" accept="image/*" style="display: none;" disabled> 
                         <span class="ms-2 text-muted">La selección de imágenes no está disponible por ahora</span>
-                        <canvas id="previewCanvas" class="mt-3" ></canvas> 
+                        <!-- <canvas id="previewCanvas" class="mt-3" ></canvas>  -->
                     </div> <!-- base64 --> 
                     <input type="hidden" name="cropped_image" id="croppedImageInput" value="{{ form.data.cropped_image|default_if_none:'' }}"> 
                     <input type="hidden" id="existingImage" value="{% if form.instance.image %}{{ form.instance.image.url }}{% endif %}">
