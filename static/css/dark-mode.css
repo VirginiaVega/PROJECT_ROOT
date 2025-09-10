@@ -173,8 +173,8 @@ body.dark-mode a:hover {
 /*Vista previa crear img*/
 #previewCanvas {
     display: block;
-    width: 50px;   /* igual que canvas.width */
-    height: 100px;  /* igual que canvas.height */
+    width: 300px;   /* igual que canvas.width */
+    height: 500px;  /* igual que canvas.height */
     border: 2px solid #ccc;
     /* object-fit: cover; */
 }

@@ -15,12 +15,13 @@
                 <div class=" my-3 d-flex align-items-end">  
                     <div class="pe-3">
                          <div class="rounded-circle overflow-hidden" style="width: 150px; height: 150px;">
-                            <img id="avatarPreview" src="{{ perfil_user.profile.avatar.url }}" class="w-100 h-100" style="object-fit: cover;">
+                            <img id="avatarPreview" src="https://dummyimage.com/150x150/ced4da/6c757d/fff&text=  Not available yet" class="w-100 h-100" style="object-fit: cover;">
                         </div>
                     </div>
                     <div>
-                        <label for="avatarInput" class="btn btn-primary">Seleccionar</label> 
-                        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;">
+                        <label for="avatarInput" class="btn btn-primary" style="opacity: 0.6; pointer-events: none;">Seleccionar</label> 
+                        <input type="file" id="avatarInput" name="avatar" accept="image/*" style="display: none;" disabled>
+                        <span class="ms-2 text-muted">La selección de imágenes no está disponible por ahora</span>
                     </div>                    
                 </div>
 
