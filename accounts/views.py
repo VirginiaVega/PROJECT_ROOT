@@ -89,11 +89,11 @@ def perfilConsult(request, username):
      tipo = request.GET.get('tipo', 'posteos')
      if tipo == 'calificados' and perfil_user == request.user:
         publicaciones = [
-            {"post": score.post, "score": score.score}
+            {"post": score.post, "score": score.score, "title":score.post.title}
             for score in Score.objects.filter(user=request.user).select_related("post").order_by("-post__created_at")
         ]
      else:
-        publicaciones = [{"post": p, "score": None} for p in Post.objects.filter(user=perfil_user)]
+        publicaciones = [{"post": p, "score": None, "title":p.title} for p in Post.objects.filter(user=perfil_user)]
      return render(request, "account/profile.html",{'perfil_user': perfil_user, 'publicaciones': publicaciones, 'tipo': tipo})
 
 
