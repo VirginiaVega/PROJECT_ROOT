@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const ctx = canvas.getContext('2d');
     const croppedImageInput = document.getElementById('croppedImageInput');
     const cropWidth = 300;
-    const cropHeight = 500;
+    const cropHeight = 400;
 
     function drawCroppedImage(src) {
         const img = new Image();

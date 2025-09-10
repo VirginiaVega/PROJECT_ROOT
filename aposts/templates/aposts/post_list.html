@@ -7,8 +7,9 @@
         <div class="row px-5 justify-content-center">
             <!-- Card -->
             {% for post in object_list %}
-            <div class="col-lg-4 mb-5">
 
+
+            <div class="col-lg-4 mb-5">
                 <div class="card h-100 shadow border-0 position-relative overflow-hidden">
                         {% if post.image %}
                             <img class="card-img-top post-img" src="{{ post.image.url }}" />                             
@@ -18,17 +19,17 @@
                         <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=post.pk %}"></a>
 
                         <!-- Overlay + user -->
-                        <div class="overlay d-flex align-items-end justify-content-start p-3">
+                        <div class="overlay d-flex align-items-end justify-content-start p-3" >
                             <div class="d-flex align-items-center text-white">
-
                                 <img class="rounded-circle me-2" src="https://dummyimage.com/40x40/ced4da/6c757d/fff&text=Qualifs" width="40" height="40" style="object-fit: cover;"/>
-                                
-                                <div class="small fw-bold">{{ post.user }}</div>
+                                <div class="small fw-bold">{{ post.user }}</div> - <div class="small fw-bold px-2" >{{ post.title }}</div>
+
                             </div>
                         </div>
                 </div>
-
             </div>
+
+            
             {% endfor %}
         </div>
     </div>
