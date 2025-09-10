@@ -48,7 +48,7 @@
                             <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
 
                             <!-- Overlay -->
-                            <div class="overlay d-flex align-items-end justify-content-start p-3">
+                            <div class="position-absolute top-0 start-0 overlay d-flex align-items-end justify-content-start p-3">
                                 <div class="d-flex align-items-center text-white">
                                     <div class="small fw-bold">
                                         {{ p.total_scores|default:0 }} 
