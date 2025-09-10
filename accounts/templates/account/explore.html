@@ -37,21 +37,23 @@
         <div class="row gx-1 align-items-center">
             <div class="row px-5 justify-content-center contenido">
                 {% for p in posts %}
-                <div class="col-lg-4 mb-5">
-                    <div class="card h-100 shadow border-0 position-relative overflow-hidden">
-                        {% if p.image %}
-                            <img class="card-img-top post-img" src="{{ p.image.url }}" />                             
-                        {% else %}
-                            <img class="card-img-top post-img w-100 h-200" src="{% static 'images/man-using.jpg' %}"/>
-                        {% endif %}
-                        <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
+                <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
+                    <div class="card h-100 shadow border-0 ">
+                        <div class="position-relative overflow-hidden" style="height: 400px;">
+                            {% if p.image %}
+                                <img class="card-img-top post-img" src="{{ p.image.url }}" />                             
+                            {% else %}
+                                <img class="card-img-top post-img w-100 h-200" src="{% static 'images/man-using.jpg' %}" style="object-fit: cover;"/>
+                            {% endif %}
+                            <a class="text-decoration-none link-dark stretched-link" href="{% url 'publicacion_detail' pk=p.pk %}"></a>
 
-                        <!-- Overlay -->
-                        <div class="overlay d-flex align-items-end justify-content-start p-3">
-                            <div class="d-flex align-items-center text-white">
-                                <div class="small fw-bold">
-                                    {{ p.total_scores|default:0 }} 
-                                    {% if p.total_scores == 1 %} Qualif {% else %} Qualifs {% endif %}
+                            <!-- Overlay -->
+                            <div class="overlay d-flex align-items-end justify-content-start p-3">
+                                <div class="d-flex align-items-center text-white">
+                                    <div class="small fw-bold">
+                                        {{ p.total_scores|default:0 }} 
+                                        {% if p.total_scores == 1 %} Qualif {% else %} Qualifs {% endif %}
+                                    </div>
                                 </div>
                             </div>
                         </div>
