@@ -162,8 +162,8 @@ body.dark-mode a:hover {
 
 /* Para que las imágenes sean rectangulares y no deformen */
 .post-img {
-    width: 100%;
-    height: 400px; 
+    width: 50%;
+    height: 100px; 
     object-fit: cover; /* recorta la imagen para que cubra todo el área */
 }
 
@@ -173,10 +173,10 @@ body.dark-mode a:hover {
 /*Vista previa crear img*/
 #previewCanvas {
     display: block;
-    width: 500px;   /* igual que canvas.width */
-    height: 600px;  /* igual que canvas.height */
+    width: 50px;   /* igual que canvas.width */
+    height: 100px;  /* igual que canvas.height */
     border: 2px solid #ccc;
-    object-fit: cover;
+    /* object-fit: cover; */
 }
 
 

@@ -47,14 +47,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById('previewCanvas');
     const ctx = canvas.getContext('2d');
     const croppedImageInput = document.getElementById('croppedImageInput');
-    const cropWidth = 500;
-    const cropHeight = 600;
+    const cropWidth = 50;
+    const cropHeight = 100;
 
     function drawCroppedImage(src) {
         const img = new Image();
         img.onload = function () {
             canvas.width = cropWidth;
             canvas.height = cropHeight;
+
+            canvas.style.width = '';
+            canvas.style.height = '';
 
             const scale = Math.max(
                 cropWidth / img.width,

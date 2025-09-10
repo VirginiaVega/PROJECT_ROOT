@@ -41,7 +41,7 @@
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle fs-5 p-0" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span>{{ user.username }}</span>
-                                    <img class="rounded-circle" src="{{ user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;">
+                                    <img class="rounded-circle" src="{{ user.profile.avatar.url }}" width="40" height="40" style="object-fit: cover;">
                                 </a>
                                 <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                      <li><a class="dropdown-item" href="{% url 'perfil' request.user.username %}">Perfil</a></li> 

@@ -11,7 +11,7 @@
 
                 <div class="card h-100 shadow border-0 position-relative overflow-hidden">
                         {% if post.image %}
-                            <img class="card-img-top post-img" src="{{ post.image.url }}" alt="{{ post.title }}" />                             
+                            <img class="card-img-top post-img" src="{{ post.image.url }}" />                             
                         {% else %}
                             <img class="card-img-top post-img" src="{% static 'images/man-using.jpg' %}"/>
                         {% endif %}
@@ -21,7 +21,7 @@
                         <div class="overlay d-flex align-items-end justify-content-start p-3">
                             <div class="d-flex align-items-center text-white">
 
-                                <img class="rounded-circle me-2" src="{{ post.user.profile.avatar.url }}" alt="Avatar" width="40" height="40" style="object-fit: cover;"/>
+                                <img class="rounded-circle me-2" src="{{ post.user.profile.avatar.url }}" width="40" height="40" style="object-fit: cover;"/>
                                 
                                 <div class="small fw-bold">{{ post.user }}</div>
                             </div>

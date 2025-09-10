@@ -40,7 +40,7 @@
                 <div class="col-lg-4 mb-5">
                     <div class="card h-100 shadow border-0 position-relative overflow-hidden">
                         {% if p.image %}
-                            <img class="card-img-top post-img" src="{{ p.image.url }}" alt="{{ p.title }}" />                             
+                            <img class="card-img-top post-img" src="{{ p.image.url }}" />                             
                         {% else %}
                             <img class="card-img-top post-img" src="{% static 'images/man-using.jpg' %}"/>
                         {% endif %}

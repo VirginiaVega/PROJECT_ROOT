@@ -24,19 +24,19 @@ from django.http import HttpResponse
 from django.core.management import execute_from_command_line
 import os
 
-def run_migrations_view(request):
-    try:
-        execute_from_command_line(['manage.py', 'migrate'])
-        return HttpResponse('✅ Migraciones ejecutadas exitosamente. Ahora puedes acceder a /admin/')
-    except Exception as e:
-        return HttpResponse(f'❌ Error: {str(e)}')
-#for render end
+# def run_migrations_view(request):
+#     try:
+#         execute_from_command_line(['manage.py', 'migrate'])
+#         return HttpResponse('✅ Migraciones ejecutadas exitosamente. Ahora puedes acceder a /admin/')
+#     except Exception as e:
+#         return HttpResponse(f'❌ Error: {str(e)}')
+# #for render end
 
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('run-migrations/', run_migrations_view),  # ← URL TEMPORAL render
+    # path('run-migrations/', run_migrations_view),   ← URL TEMPORAL render
     path('', include('accounts.urls')),
     path('post/', include('aposts.urls')),
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
