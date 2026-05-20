@@ -40,7 +40,7 @@ Tecnologías utilizadas:
 <img src="docs\img\img1.png">
 <img src="docs\img\img2.png">
 
-⚠️ Nota: Este proyecto no está enfocado en desarrollo avanzado, sino en demostrar el proceso completo de análisis, diseño y documentación de un sistema de información.
+
 
 ## Autora
 Virginia Vega - Analista funcional - 2025
